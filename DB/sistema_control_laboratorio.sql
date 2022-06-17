@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-06-2022 a las 02:58:31
+-- Tiempo de generación: 17-06-2022 a las 02:35:16
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -44,7 +44,8 @@ CREATE TABLE `certificados` (
   `id_cliente` int(11) DEFAULT NULL,
   `id_equipo` int(11) DEFAULT NULL,
   `fecha_certificado` date DEFAULT NULL,
-  `id_analisis` int(11) DEFAULT NULL
+  `id_analisis` int(11) DEFAULT NULL,
+  `cantidad_en_tons` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -60,7 +61,9 @@ CREATE TABLE `clientes` (
   `domicilio` varchar(255) DEFAULT NULL,
   `nombre` varchar(100) DEFAULT NULL,
   `rfc` varchar(100) DEFAULT NULL,
-  `id_estado` int(11) DEFAULT NULL
+  `estado` int(11) DEFAULT NULL,
+  `nombre_contacto` varchar(100) DEFAULT NULL,
+  `puesto_de_contacto` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -77,18 +80,11 @@ CREATE TABLE `equipo_laboratorio` (
   `modelo` varchar(100) DEFAULT NULL,
   `fecha_compra` date DEFAULT NULL,
   `no_factura` varchar(100) DEFAULT NULL,
-  `id_estado` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `estados`
---
-
-CREATE TABLE `estados` (
-  `id_estado` int(11) NOT NULL,
-  `nombre_estado` varchar(100) DEFAULT NULL
+  `estado` int(11) DEFAULT NULL,
+  `tiene_garantia` tinyint(1) DEFAULT NULL,
+  `numero_garantia` varchar(100) DEFAULT NULL,
+  `clave_mantenimiento` varchar(50) DEFAULT NULL,
+  `fecha_ultimo_mantenimiento` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -177,21 +173,13 @@ ALTER TABLE `certificados`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id_cliente`),
-  ADD KEY `clientes_FK` (`id_valores`),
-  ADD KEY `clientes_FK_1` (`id_estado`);
+  ADD KEY `clientes_FK` (`id_valores`);
 
 --
 -- Indices de la tabla `equipo_laboratorio`
 --
 ALTER TABLE `equipo_laboratorio`
-  ADD PRIMARY KEY (`id_equipo`),
-  ADD KEY `equipo_laboratorio_FK` (`id_estado`);
-
---
--- Indices de la tabla `estados`
---
-ALTER TABLE `estados`
-  ADD PRIMARY KEY (`id_estado`);
+  ADD PRIMARY KEY (`id_equipo`);
 
 --
 -- Indices de la tabla `letras`
@@ -253,12 +241,6 @@ ALTER TABLE `equipo_laboratorio`
   MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `estados`
---
-ALTER TABLE `estados`
-  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `letras`
 --
 ALTER TABLE `letras`
@@ -311,14 +293,7 @@ ALTER TABLE `certificados`
 -- Filtros para la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `valores_de_referencia` (`id_valores`),
-  ADD CONSTRAINT `clientes_FK_1` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id_estado`);
-
---
--- Filtros para la tabla `equipo_laboratorio`
---
-ALTER TABLE `equipo_laboratorio`
-  ADD CONSTRAINT `equipo_laboratorio_FK` FOREIGN KEY (`id_estado`) REFERENCES `estados` (`id_estado`);
+  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `valores_de_referencia` (`id_valores`);
 
 --
 -- Filtros para la tabla `usuarios`
