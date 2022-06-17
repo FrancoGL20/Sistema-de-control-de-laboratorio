@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-06-2022 a las 02:35:16
+-- Tiempo de generación: 17-06-2022 a las 22:47:06
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `analisis` (
   `id_analisis` int(11) NOT NULL,
   `id_lote` int(11) DEFAULT NULL,
-  `id_letra` int(11) DEFAULT NULL
+  `numero_en_lote` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -90,17 +90,6 @@ CREATE TABLE `equipo_laboratorio` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `letras`
---
-
-CREATE TABLE `letras` (
-  `id_letra` int(11) NOT NULL,
-  `letra` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `lotes`
 --
 
@@ -140,11 +129,21 @@ CREATE TABLE `usuarios` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `valores_de_referencia`
+-- Estructura de tabla para la tabla `v_de_referencia`
 --
 
-CREATE TABLE `valores_de_referencia` (
-  `id_valores` int(11) NOT NULL
+CREATE TABLE `v_de_referencia` (
+  `id_valores` int(11) NOT NULL,
+  `resistencia` varchar(100) DEFAULT NULL,
+  `hinchamiento` varchar(100) DEFAULT NULL,
+  `amplitud` varchar(100) DEFAULT NULL,
+  `hidratacion` varchar(100) DEFAULT NULL,
+  `humedad` varchar(100) DEFAULT NULL,
+  `esfuerzo` varchar(100) DEFAULT NULL,
+  `absorcion` varchar(100) DEFAULT NULL,
+  `estabilidad` varchar(100) DEFAULT NULL,
+  `rendimiento` varchar(100) DEFAULT NULL,
+  `ceniza` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -156,8 +155,7 @@ CREATE TABLE `valores_de_referencia` (
 --
 ALTER TABLE `analisis`
   ADD PRIMARY KEY (`id_analisis`),
-  ADD KEY `analisis_FK` (`id_lote`),
-  ADD KEY `analisis_FK_1` (`id_letra`);
+  ADD KEY `analisis_FK` (`id_lote`);
 
 --
 -- Indices de la tabla `certificados`
@@ -173,19 +171,13 @@ ALTER TABLE `certificados`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id_cliente`),
-  ADD KEY `clientes_FK` (`id_valores`);
+  ADD KEY `clientes_FK_1` (`id_valores`);
 
 --
 -- Indices de la tabla `equipo_laboratorio`
 --
 ALTER TABLE `equipo_laboratorio`
   ADD PRIMARY KEY (`id_equipo`);
-
---
--- Indices de la tabla `letras`
---
-ALTER TABLE `letras`
-  ADD PRIMARY KEY (`id_letra`);
 
 --
 -- Indices de la tabla `lotes`
@@ -207,9 +199,9 @@ ALTER TABLE `usuarios`
   ADD KEY `usuarios_FK` (`id_tipo`);
 
 --
--- Indices de la tabla `valores_de_referencia`
+-- Indices de la tabla `v_de_referencia`
 --
-ALTER TABLE `valores_de_referencia`
+ALTER TABLE `v_de_referencia`
   ADD PRIMARY KEY (`id_valores`);
 
 --
@@ -241,12 +233,6 @@ ALTER TABLE `equipo_laboratorio`
   MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `letras`
---
-ALTER TABLE `letras`
-  MODIFY `id_letra` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `lotes`
 --
 ALTER TABLE `lotes`
@@ -265,9 +251,9 @@ ALTER TABLE `usuarios`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `valores_de_referencia`
+-- AUTO_INCREMENT de la tabla `v_de_referencia`
 --
-ALTER TABLE `valores_de_referencia`
+ALTER TABLE `v_de_referencia`
   MODIFY `id_valores` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -278,8 +264,7 @@ ALTER TABLE `valores_de_referencia`
 -- Filtros para la tabla `analisis`
 --
 ALTER TABLE `analisis`
-  ADD CONSTRAINT `analisis_FK` FOREIGN KEY (`id_lote`) REFERENCES `lotes` (`id_lote`),
-  ADD CONSTRAINT `analisis_FK_1` FOREIGN KEY (`id_letra`) REFERENCES `letras` (`id_letra`);
+  ADD CONSTRAINT `analisis_FK` FOREIGN KEY (`id_lote`) REFERENCES `lotes` (`id_lote`);
 
 --
 -- Filtros para la tabla `certificados`
@@ -293,7 +278,8 @@ ALTER TABLE `certificados`
 -- Filtros para la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `valores_de_referencia` (`id_valores`);
+  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `valores_de_referencia` (`id_valores`),
+  ADD CONSTRAINT `clientes_FK_1` FOREIGN KEY (`id_valores`) REFERENCES `v_de_referencia` (`id_valores`);
 
 --
 -- Filtros para la tabla `usuarios`
