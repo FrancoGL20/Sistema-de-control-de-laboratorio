@@ -54,7 +54,7 @@
 <body class="background">
     <div class="container mx-auto flex justify-center">
         <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm mt-20 w-[28rem]">
-            <div> <h1 class="text-2xl text-center font-bold">Alta de Usuarios</h1>
+            <div> <h1 class="text-2xl text-center font-bold mb-7">Alta de Usuarios</h1>
             <p class="text-center font-bold" style="margin-top: 5px;"><?= $exitoInsercion?></p></div>
             <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
