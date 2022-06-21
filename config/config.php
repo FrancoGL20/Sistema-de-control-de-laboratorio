@@ -1,8 +1,8 @@
 <?php
 
-$url="http://localhost/Sistema-de-control-de-laboratorio";
+$url="http://localhost/sistema-de-control-de-laboratorio";
 
 define('HOST', 'localhost');
 define('USER', 'root');
-define('PASSWORD', "");
+define('PASSWORD', "root");
 define('DB', 'sistema_control_laboratorio');
