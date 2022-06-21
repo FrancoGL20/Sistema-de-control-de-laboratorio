@@ -17,7 +17,6 @@
             </div>
             <!-- Lado derecho -->
             <div class="hidden lg:flex items-center space-x-1">
-                <!-- <a class="rounded p-2 hover:bg-blue-50 transition duration-500 text-black" href="./index.html">Inicio</a> -->
                 <!-- Dropdown button 1 -->
                 <div class="flex flex-col overflow-visible float-right items-start">
                     <button class="rounded p-2 dropBtn hover:bg-blue-50 transition duration-500 text-black" id="dropBtn">
@@ -105,6 +104,14 @@
                         <a href="./crear-certificado.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Creación</a>
                         <a href="./consultar-certificados.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Consulta <br/>e impresión</a>
                     </div>
+                </div>
+                <!-- Cerrar sesión -->
+                <div>
+                    <form action="" method="">
+                        <button type="submit" name="cerrarSesion" class="rounded p-2 hover:bg-blue-50 transition duration-500 text-black">
+                            Cerrar Sesión
+                        </button>
+                    </form>
                 </div>
             </div>
             <!-- Mobile button -->
@@ -207,6 +214,14 @@
                 <a href="./crear-certificado.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Creación</a>
                 <a href="./consultar-certificados.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Consulta e impresión</a>
             </div>
+        </div>
+        <!-- Cerrar sesión -->
+        <div class="text-center flex flex-col rounded hover:bg-blue-50 transition duration-500">
+            <form action="" method="" class="flex items-center justify-center m-0">
+                <button type="submit" name="cerrarSesion" class="rounded p-2 text-center text-black block w-full">
+                    Cerrar Sesión
+                </button>
+            </form>
         </div>
     </div>
 </nav>
