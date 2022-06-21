@@ -107,11 +107,9 @@
                 </div>
                 <!-- Cerrar sesión -->
                 <div>
-                    <form action="" method="">
-                        <button type="submit" name="cerrarSesion" class="rounded p-2 hover:bg-blue-50 transition duration-500 text-black">
-                            Cerrar Sesión
-                        </button>
-                    </form>
+                    <a href="./cerrar_sesion.php" class="rounded p-2 hover:bg-blue-50 transition duration-500 text-black">
+                        <b>Cerrar Sesión</b>
+                    </a>
                 </div>
             </div>
             <!-- Mobile button -->
