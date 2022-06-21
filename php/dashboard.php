@@ -1,6 +1,5 @@
 <?php 
-    session_start();
-    require_once("./validar_inicio_sesion.php");
+    require_once("./validar_sesion_iniciada.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -115,7 +114,9 @@
         <div class="p-10 flex flex-col items-center space-y-20">
             <h1 class="text-center text-3xl mt-14"><b>Sistema de Control de Laboratorio</b></h1>
             <div class="flex flex-wrap gap-7 justify-center">
+                
                 <!-- Usuarios -->
+                <?php if($_SESSION['sesion']['tipo']==3): ?>
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 rounded-t-xl" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" alt="Un hombre trabajando en su computadora sobre un escritorio, acompanado de su taza de cafe">
                     <h2 class="text-xl font-bold">Usuarios</h2>
@@ -140,6 +141,8 @@
                         </ul>
                     </div>
                 </div>
+                <?php endif;?>
+
                 <!-- Clientes -->
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 rounded-t-xl" src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1184&q=80" alt="Clientes conversando en una mesa">
@@ -173,6 +176,7 @@
                         </ul>
                     </div>
                 </div>
+                
                 <!-- Equipo de laboratorio -->
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 rounded-t-xl" src="https://images.unsplash.com/photo-1614308457932-e16d85c5d053?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Equipo de laboratorio sobre una mesa">
@@ -206,6 +210,7 @@
                         </ul>
                     </div>
                 </div>
+                
                 <!-- Lotes -->
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 rounded-t-xl" src="https://images.unsplash.com/photo-1646430710398-9cfab77621c3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Granja y silos de harina">
@@ -239,6 +244,7 @@
                         </ul>
                     </div>
                 </div>
+                
                 <!-- Análisis -->
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 rounded-t-xl" src="https://images.unsplash.com/photo-1618044733300-9472054094ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80" alt="Hoja de una análisis con una gráfica">
@@ -272,6 +278,7 @@
                         </ul>
                     </div>
                 </div>
+                
                 <!-- Certificados -->
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 h-40 rounded-t-xl" src="https://images.unsplash.com/photo-1589330694653-ded6df03f754?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1516&q=80" alt="Certificado firmado">

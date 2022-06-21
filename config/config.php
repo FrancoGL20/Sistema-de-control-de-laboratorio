@@ -1,6 +1,6 @@
 <?php
 
-define('URL', 'http://localhost/curso/43.%20MVC/');
+$url="http://localhost/Sistema-de-control-de-laboratorio";
 
 define('HOST', 'localhost');
 define('USER', 'root');

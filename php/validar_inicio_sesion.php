@@ -36,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //Unhash password and autenticate the user
                 $hashedPassword = $userInfo['contrasena'];
                 $verify = password_verify($contra, $hashedPassword);
+                $id=$userInfo['id_usuario'];
+                $tipo=$userInfo['id_tipo'];
                 if ($userInfo['correo'] == $correo and $verify) {
                     session_start();
                     $_SESSION['sesion']=array();
