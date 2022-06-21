@@ -18,7 +18,7 @@
         <div class="container mx-auto flex h-screen items-center justify-center">
             <div class="w-full max-w-xs bg-gray-100 shadow-md rounded p-8 flex flex-col justify-around">
                 <img src="../img/logoHarinasElizondo.png" class="w-52 self-center mb-4" alt="">
-                <form class="m-0" method="post">
+                <form class="m-0" method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="mb-4">
                         <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
                             Correo

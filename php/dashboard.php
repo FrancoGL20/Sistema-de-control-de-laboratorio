@@ -8,7 +8,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Inicio de Sesión</title>
+        <title>Dashboard</title>
         <link rel="stylesheet" href="../css/styles.css">
         <link rel="shortcut icon" href="https://harinaselizondo.com/wp-content/uploads/2017/03/Favicon.png">
         <script src="https://cdn.tailwindcss.com"></script>
@@ -113,7 +113,7 @@
         <!-- Fin de navbar -->
         <!-- Contenedor Principal -->
         <div class="p-10 flex flex-col items-center space-y-20">
-            <h1 class="text-center text-3xl mt-14">Sistema de Control de Laboratorio</h1>
+            <h1 class="text-center text-3xl mt-14"><b>Sistema de Control de Laboratorio</b></h1>
             <div class="flex flex-wrap gap-7 justify-center">
                 <!-- Usuarios -->
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
