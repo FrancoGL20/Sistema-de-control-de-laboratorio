@@ -1,8 +1,39 @@
+<pre>
 <?php
-    session_start();
-    require_once("./validar_inicio_sesion.php");
-    
+    require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    $errorCorreo=$exitoInsercion="";
+    $hay_error=false;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // var_dump($_POST);
+        $correo=test_input($_POST['correo']);
+        $contrasena=test_input($_POST['contrasena']);
+        $contrasenaHasheada = password_hash($contrasena, PASSWORD_DEFAULT);
+        $tipoPerfil=test_input($_POST['tipoPerfil']);
+        $query_existencia_usuario="SELECT * FROM usuarios WHERE correo='$correo'";
+        $resultado_consulta=hacerConsulta($query_existencia_usuario);
+        // var_dump($resultado_consulta);
+        if($resultado_consulta['numero']!=0){
+            $hay_error=true;
+            $errorCorreo="*Usuario ya existente";
+        }
+        if(!$hay_error){
+            $query_registro="INSERT INTO sistema_control_laboratorio.usuarios (correo,contrasena,id_tipo) VALUES ('$correo','$contrasenaHasheada',$tipoPerfil);";
+            $resultado_registro=hacerInsercion($query_registro);
+            // var_dump($resultado_registro);
+            if($resultado_registro==true){
+                $exitoInsercion="Usuario registrado con éxito";
+            }
+        }
+    }
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -23,29 +54,30 @@
 <body class="background">
     <div class="container mx-auto flex justify-center">
         <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm mt-20 w-[28rem]">
-            <h1 class="text-2xl text-center mb-4 font-bold">Alta de Usuarios</h1>
-            <form action="" method="">
+            <div> <h1 class="text-2xl text-center font-bold">Alta de Usuarios</h1>
+            <p class="text-center font-bold" style="margin-top: 5px;"><?= $exitoInsercion?></p></div>
+            <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
                     <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
-                        Correo
+                        Correo <span style="color:red;"><?= $errorCorreo?></span>
                     </label>
-                    <input type="email" name="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="nombre@helizondo.com">
+                    <input type="email" name="correo" id="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="nombre@helizondo.com" required>
                 </div>
                 <div class="mb-4">
-                    <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="contrasena" class="block text-gray-700 text-sm font-bold mb-2">
                         Contraseña
                     </label>
-                    <input type="text" name="contrasena" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="**********">
+                    <input type="text" name="contrasena" id="contrasena" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="**********" required>
                 </div>
                 <div class="mb-4">
-                    <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="tipoPerfil" class="block text-gray-700 text-sm font-bold mb-2">
                         Tipo de Usuario
                     </label>
-                    <select name="tipoPerfil" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500">
+                    <select name="tipoPerfil" id="tipoPerfil" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
                         <option value="" selected disabled>Elija el tipo de usuario...</option>
-                        <option value="consultor">Consultor</option>
-                        <option value="analista">Analista</option>
-                        <option value="administrador">Administraddor</option>
+                        <option value="1">Consultor</option>
+                        <option value="2">Analista</option>
+                        <option value="3">Administraddor</option>
                     </select>
                 </div>
                 <div class="flex items-center justify-center mt-10">
