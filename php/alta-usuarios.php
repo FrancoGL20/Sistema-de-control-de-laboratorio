@@ -4,6 +4,7 @@
     
 ?>
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="es">
 
 <head>
@@ -21,5 +22,4 @@
 <body class="background">
 
 </body>
-
 </html>
