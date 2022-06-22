@@ -1,4 +1,3 @@
-<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
     require_once("../DB/controlarDB.php");
@@ -25,9 +24,9 @@
             $contrasenaHasheada = password_hash($contrasena, PASSWORD_DEFAULT);
             $tipoPerfil=test_input($_POST['tipoPerfil']);
             $query_existencia_usuario="SELECT * FROM usuarios WHERE correo='$correo'";
-            $resultado_consulta=hacerConsulta($query_existencia_usuario);
+            $resultado_consulta=numeroRegistrosCon($query_existencia_usuario);
             // var_dump($resultado_consulta);
-            if($resultado_consulta['numero']!=0){
+            if($resultado_consulta!=0){
                 $hay_error=true;
                 $errorCorreo="*Usuario ya existente";
             }
@@ -42,7 +41,6 @@
         }
     }
 ?>
-</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -68,7 +66,7 @@
             <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
                     <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
-                        Correo <span style="color:red;"><?= $errorCorreo?></span>
+                        Correo <span class="error"><?= $errorCorreo?></span>
                     </label>
                     <input type="email" name="correo" id="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="nombre@helizondo.com" required>
                 </div>
