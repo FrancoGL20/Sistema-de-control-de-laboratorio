@@ -24,6 +24,16 @@
             <h1 class="text-2xl text-center font-bold mb-7">Editar Cliente</h1>
             <form method="post" action="">
                 <div class="mb-4">
+                    <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">
+                        Estado
+                    </label>
+                    <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="1" selected>Activo</option>
+                        <option value="2">Inactivo</option>
+                        <option value="3">Baja</option>
+                    </select>
+                </div>
+                <div class="mb-4">
                     <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">
                         Nombre
                     </label>
