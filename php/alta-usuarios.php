@@ -2,6 +2,9 @@
 <?php
     require_once("./validar_sesion_iniciada.php");
     require_once("../DB/controlarDB.php");
+    function checkemail($str){
+        return (preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@(helizondo\.com)$/ix", $str)) ? true : false;
+    }
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -13,15 +16,21 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // var_dump($_POST);
         $correo=test_input($_POST['correo']);
-        $contrasena=test_input($_POST['contrasena']);
-        $contrasenaHasheada = password_hash($contrasena, PASSWORD_DEFAULT);
-        $tipoPerfil=test_input($_POST['tipoPerfil']);
-        $query_existencia_usuario="SELECT * FROM usuarios WHERE correo='$correo'";
-        $resultado_consulta=hacerConsulta($query_existencia_usuario);
-        // var_dump($resultado_consulta);
-        if($resultado_consulta['numero']!=0){
+        if(!checkemail($correo)){
             $hay_error=true;
-            $errorCorreo="*Usuario ya existente";
+            $errorCorreo="*El correo no es de la empresa";
+        }
+        if(!$hay_error){
+            $contrasena=test_input($_POST['contrasena']);
+            $contrasenaHasheada = password_hash($contrasena, PASSWORD_DEFAULT);
+            $tipoPerfil=test_input($_POST['tipoPerfil']);
+            $query_existencia_usuario="SELECT * FROM usuarios WHERE correo='$correo'";
+            $resultado_consulta=hacerConsulta($query_existencia_usuario);
+            // var_dump($resultado_consulta);
+            if($resultado_consulta['numero']!=0){
+                $hay_error=true;
+                $errorCorreo="*Usuario ya existente";
+            }
         }
         if(!$hay_error){
             $query_registro="INSERT INTO sistema_control_laboratorio.usuarios (correo,contrasena,id_tipo) VALUES ('$correo','$contrasenaHasheada',$tipoPerfil);";
