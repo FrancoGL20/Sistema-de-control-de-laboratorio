@@ -33,10 +33,10 @@
         }
         if(!$hay_error){
             $query_registro="INSERT INTO sistema_control_laboratorio.usuarios (correo,contrasena,id_tipo) VALUES ('$correo','$contrasenaHasheada',$tipoPerfil);";
-            $resultado_registro=hacerInsercion($query_registro);
+            $resultado_registro=ejecutarQuery($query_registro);
             // var_dump($resultado_registro);
             if($resultado_registro==true){
-                $exitoInsercion="Usuario registrado con éxito";
+                $exitoInsercion="\"Usuario registrado con éxito\"";
             }
         }
     }

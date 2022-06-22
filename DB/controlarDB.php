@@ -43,7 +43,7 @@ function hacerConsulta(string $query){
  * hace la ejecución de un query
  * y devuelve true si todo salió bien
  */
-function hacerInsercion(string $query){
+function ejecutarQuery(string $query){
     $con = mysqli_connect(HOST, USER, PASSWORD, DB);
     
     if (mysqli_connect_errno()) {

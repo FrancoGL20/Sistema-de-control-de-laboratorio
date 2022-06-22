@@ -1,7 +1,5 @@
 <?php
-    session_start();
-    require_once("./validar_inicio_sesion.php");
-    
+    require_once("./validar_sesion_iniciada.php");
 ?>
 <!DOCTYPE html>
 <html lang="es">
