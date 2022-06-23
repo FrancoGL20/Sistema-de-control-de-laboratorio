@@ -223,17 +223,88 @@
                     </label>
                     <input type="text" name="nombre" id="nombre" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Panes López" required>
                 </div>
+                <h2 class="block text-gray-700 text-base font-bold mb-2">Domicilio</h2>
                 <div class="mb-4">
-                    <label for="domicilio" class="block text-gray-700 text-sm font-bold mb-2">
-                        Domicilio
+                    <label for="calle" class="block text-gray-700 text-sm font-bold mb-2">
+                        Calle
                     </label>
-                    <textarea name="domicilio" id="domicilio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Av. Avenida #1" cols="30" rows="3" required></textarea>
+                    <input type="text" name="calle" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Avenida Los Manzanos" required>
+                </div>
+                <div class="mb-4">
+                    <label for="colonia" class="block text-gray-700 text-sm font-bold mb-2">
+                        Colonia
+                    </label>
+                    <input type="text" name="colonia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Vista del Valle" required>
+                </div>
+                <div class="mb-4">
+                    <label for="numero exterior" class="block text-gray-700 text-sm font-bold mb-2">
+                        Número Exterior
+                    </label>
+                    <input type="number" name="numeroExterior" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="1" required>
+                </div>
+                <div class="mb-4">
+                    <label for="numero interior" class="block text-gray-700 text-sm font-bold mb-2">
+                        Número Interior (Opcional)
+                    </label>
+                    <input type="number" name="numeroInt" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="22" required>
+                </div>
+                <div class="mb-4">
+                    <label for="municipio" class="block text-gray-700 text-sm font-bold mb-2">
+                        Municipio
+                    </label>
+                    <input type="text" name="municipio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Álvaro Obregón" required>
+                </div>
+                <div class="mb-4">
+                    <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">
+                        Estado
+                    </label>
+                    <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500">
+                        <option value="" selected disabled>Seleccione el estado...</option>
+                        <option value="Aguascalientes">Aguascalientes</option>
+                        <option value="Baja California">Baja California</option>
+                        <option value="Baja California Sur">Baja California Sur</option>
+                        <option value="Campeche">Campeche</option>
+                        <option value="Chiapas">Chiapas</option>
+                        <option value="Chihuahua">Chihuahua</option>
+                        <option value="CDMX">Ciudad de México</option>
+                        <option value="Coahuila">Coahuila</option>
+                        <option value="Colima">Colima</option>
+                        <option value="Durango">Durango</option>
+                        <option value="Estado de México">Estado de México</option>
+                        <option value="Guanajuato">Guanajuato</option>
+                        <option value="Guerrero">Guerrero</option>
+                        <option value="Hidalgo">Hidalgo</option>
+                        <option value="Jalisco">Jalisco</option>
+                        <option value="Michoacán">Michoacán</option>
+                        <option value="Morelos">Morelos</option>
+                        <option value="Nayarit">Nayarit</option>
+                        <option value="Nuevo León">Nuevo León</option>
+                        <option value="Oaxaca">Oaxaca</option>
+                        <option value="Puebla">Puebla</option>
+                        <option value="Querétaro">Querétaro</option>
+                        <option value="Quintana Roo">Quintana Roo</option>
+                        <option value="San Luis Potosí">San Luis Potosí</option>
+                        <option value="Sinaloa">Sinaloa</option>
+                        <option value="Sonora">Sonora</option>
+                        <option value="Tabasco">Tabasco</option>
+                        <option value="Tamaulipas">Tamaulipas</option>
+                        <option value="Tlaxcala">Tlaxcala</option>
+                        <option value="Veracruz">Veracruz</option>
+                        <option value="Yucatán">Yucatán</option>
+                        <option value="Zacatecas">Zacatecas</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="codigo postal" class="block text-gray-700 text-sm font-bold mb-2">
+                        Código Postal
+                    </label>
+                    <input type="number" name="codigoPostal" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="53476" required>
                 </div>
                 <div class="mb-4">
                     <label for="rfc" class="block text-gray-700 text-sm font-bold mb-2">
                         RFC <span class="error"><?= $errorRfc?></span>
                     </label>
-                    <input type="text" name="rfc" id="rfc" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required>
+                    <input type="text" name="rfc" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required>
                 </div>
                 <div class="mb-4">
                     <label for="nombre de contacto" class="block text-gray-700 text-sm font-bold mb-2">
