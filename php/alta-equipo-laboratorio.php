@@ -68,10 +68,18 @@
                         <label for="valores de referencia internacionales" class="text-gray-700 text-xs font-bold mb-2">No</label>
                     </div>
                     <div class="mb-4 mt-4 hidden" id="box">
-                        <label for="clave de mantenimiento" class="block text-gray-700 text-sm font-bold mb-2">
-                            Número de Garantía
-                        </label>
-                        <input type="number" name="numeroGarantia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="100345672">
+                        <div class="mb-4">
+                            <label for="numero de garantia" class="block text-gray-700 text-sm font-bold mb-2">
+                                Número de Garantía
+                            </label>
+                            <input type="number" name="numeroGarantia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="100345672">
+                        </div>
+                        <div class="mb-4">
+                            <label for="fecha de vencimiento de la garantia" class="block text-gray-700 text-sm font-bold mb-2">
+                                Fecha de Vencimiento de la Garantía
+                            </label>
+                            <input type="date" name="fechaVencimientoGarantia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="100T" required>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-4">

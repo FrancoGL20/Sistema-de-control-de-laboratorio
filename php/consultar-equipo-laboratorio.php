@@ -84,6 +84,10 @@
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">Solo desplegar este renglon si tiene garantia</td>
                         </tr>
                         <tr>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Fecha de Vencimiento de la Garantía</td>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">Solo desplegar este renglon si tiene garantia</td>
+                        </tr>
+                        <tr>
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Clave de Mantenimiento</td>
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">MSLA1008465</td>
                         </tr>
