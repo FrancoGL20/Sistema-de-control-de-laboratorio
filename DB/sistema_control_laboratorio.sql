@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2022 a las 03:08:09
+-- Tiempo de generación: 23-06-2022 a las 05:45:46
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -61,7 +61,7 @@ CREATE TABLE `clientes` (
   `domicilio` varchar(255) DEFAULT NULL,
   `nombre` varchar(100) DEFAULT NULL,
   `rfc` varchar(100) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
+  `estado` int(11) DEFAULT 3,
   `nombre_contacto` varchar(100) DEFAULT NULL,
   `puesto_de_contacto` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -196,7 +196,7 @@ ALTER TABLE `certificados`
 --
 ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id_cliente`),
-  ADD KEY `clientes_FK_1` (`id_valores`);
+  ADD KEY `clientes_FK` (`id_valores`);
 
 --
 -- Indices de la tabla `equipo_laboratorio`
@@ -249,7 +249,7 @@ ALTER TABLE `certificados`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo_laboratorio`
@@ -273,13 +273,13 @@ ALTER TABLE `tipos_usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `v_de_referencia`
 --
 ALTER TABLE `v_de_referencia`
-  MODIFY `id_valores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_valores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Restricciones para tablas volcadas
@@ -303,8 +303,7 @@ ALTER TABLE `certificados`
 -- Filtros para la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `valores_de_referencia` (`id_valores`),
-  ADD CONSTRAINT `clientes_FK_1` FOREIGN KEY (`id_valores`) REFERENCES `v_de_referencia` (`id_valores`);
+  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `v_de_referencia` (`id_valores`);
 
 --
 -- Filtros para la tabla `usuarios`
