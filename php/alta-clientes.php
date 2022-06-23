@@ -1,6 +1,199 @@
+<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    function test_input($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    $errorRfc=$mensajeAltaCliente="";
+    $hay_error=false;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // print_r($_POST);
+        #  información personal
+        $nombre=test_input($_POST['nombre']);
+        $domicilio=test_input($_POST['domicilio']);
+        $rfc=test_input($_POST['rfc']);
+        $nombreContacto=test_input($_POST['nombreContacto']);
+        $correo=test_input($_POST['correo']);
+        $puestoContacto=test_input($_POST['puestoContacto']);
+        if(strlen($rfc)!=13){
+            $errorRfc="* longitud de RFC incorrecta";
+            $hay_error=true;
+        }
+        if (!$hay_error) {
+            # info de los valores de referencia
+
+            $query_valores_internacionales="SELECT * FROM v_de_referencia WHERE id_valores=1";
+            $limites_int_sin_formato=hacerConsulta($query_valores_internacionales)[0];
+            // var_dump($limites_int_sin_formato);
+            $limites_int_inferiores=[];
+            $limites_int_superiores=[];
+            $unidades_medida=[];
+            for ($i=1; $i <= 10; $i++) {
+                $limites_int_inferiores[$i]=explode(',', $limites_int_sin_formato[$i])[0];
+                $limites_int_superiores[$i]=explode(',', $limites_int_sin_formato[$i])[1];
+                $unidades_medida[$i]=explode(',', $limites_int_sin_formato[$i])[2];
+            }
+            // print_r($limites_int_inferiores);
+            // print_r($limites_int_superiores);
+
+
+            $nuevo=false; // hacer un nuevo registro de v_de_ref o no?
+            if (test_input($_POST['limiteInferiorResistencia'])=="") {
+                $limiteInferiorResistencia=$limites_int_inferiores[1];
+            } else {
+                $nuevo=true;
+                $limiteInferiorResistencia=test_input($_POST['limiteInferiorResistencia']);
+            }
+            if (test_input($_POST['limiteInferiorHinchamiento'])=="") {
+                $limiteInferiorHinchamiento=$limites_int_inferiores[2];
+            } else {
+                $nuevo=true;
+                $limiteInferiorHinchamiento=test_input($_POST['limiteInferiorHinchamiento']);
+            }
+            if (test_input($_POST['limiteInferiorAmplitud'])=="") {
+                $limiteInferiorAmplitud=$limites_int_inferiores[3];
+            } else {
+                $nuevo=true;
+                $limiteInferiorAmplitud=test_input($_POST['limiteInferiorAmplitud']);
+            }
+            if (test_input($_POST['limiteInferiorHidratacion'])=="") {
+                $limiteInferiorHidratacion=$limites_int_inferiores[4];
+            } else {
+                $nuevo=true;
+                $limiteInferiorHidratacion=test_input($_POST['limiteInferiorHidratacion']);
+            }
+            if (test_input($_POST['limiteInferiorHumedad'])=="") {
+                $limiteInferiorHumedad=$limites_int_inferiores[5];
+            } else {
+                $nuevo=true;
+                $limiteInferiorHumedad=test_input($_POST['limiteInferiorHumedad']);
+            }
+            if (test_input($_POST['limiteInferiorEsfuerzo'])=="") {
+                $limiteInferiorEsfuerzo=$limites_int_inferiores[6];
+            } else {
+                $nuevo=true;
+                $limiteInferiorEsfuerzo=test_input($_POST['limiteInferiorEsfuerzo']);
+            }
+            if (test_input($_POST['limiteInferiorAbsorcion'])=="") {
+                $limiteInferiorAbsorcion=$limites_int_inferiores[7];
+            } else {
+                $nuevo=true;
+                $limiteInferiorAbsorcion=test_input($_POST['limiteInferiorAbsorcion']);
+            }
+            if (test_input($_POST['limiteInferiorEstabilidad'])=="") {
+                $limiteInferiorEstabilidad=$limites_int_inferiores[8];
+            } else {
+                $nuevo=true;
+                $limiteInferiorEstabilidad=test_input($_POST['limiteInferiorEstabilidad']);
+            }
+            if (test_input($_POST['limiteInferiorRendimiento'])=="") {
+                $limiteInferiorRendimiento=$limites_int_inferiores[9];
+            } else {
+                $nuevo=true;
+                $limiteInferiorRendimiento=test_input($_POST['limiteInferiorRendimiento']);
+            }
+            if (test_input($_POST['limiteInferiorCeniza'])=="") {
+                $limiteInferiorCeniza=$limites_int_inferiores[10];
+            } else {
+                $nuevo=true;
+                $limiteInferiorCeniza=test_input($_POST['limiteInferiorCeniza']);
+            }
+
+
+            // fari
+            if (test_input($_POST['limiteSuperiorResistencia'])=="") {
+                $limiteSuperiorResistencia=$limites_int_superiores[1];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorResistencia=test_input($_POST['limiteSuperiorResistencia']);
+            }
+            if (test_input($_POST['limiteSuperiorHinchamiento'])=="") {
+                $limiteSuperiorHinchamiento=$limites_int_superiores[2];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorHinchamiento=test_input($_POST['limiteSuperiorHinchamiento']);
+            }
+            if (test_input($_POST['limiteSuperiorAmplitud'])=="") {
+                $limiteSuperiorAmplitud=$limites_int_superiores[3];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorAmplitud=test_input($_POST['limiteSuperiorAmplitud']);
+            }
+            if (test_input($_POST['limiteSuperiorHidratacion'])=="") {
+                $limiteSuperiorHidratacion=$limites_int_superiores[4];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorHidratacion=test_input($_POST['limiteSuperiorHidratacion']);
+            }
+            if (test_input($_POST['limiteSuperiorHumedad'])=="") {
+                $limiteSuperiorHumedad=$limites_int_superiores[5];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorHumedad=test_input($_POST['limiteSuperiorHumedad']);
+            }
+            if (test_input($_POST['limiteSuperiorEsfuerzo'])=="") {
+                $limiteSuperiorEsfuerzo=$limites_int_superiores[6];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorEsfuerzo=test_input($_POST['limiteSuperiorEsfuerzo']);
+            }
+            if (test_input($_POST['limiteSuperiorAbsorcion'])=="") {
+                $limiteSuperiorAbsorcion=$limites_int_superiores[7];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorAbsorcion=test_input($_POST['limiteSuperiorAbsorcion']);
+            }
+            if (test_input($_POST['limiteSuperiorEstabilidad'])=="") {
+                $limiteSuperiorEstabilidad=$limites_int_superiores[8];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorEstabilidad=test_input($_POST['limiteSuperiorEstabilidad']);
+            }
+            if (test_input($_POST['limiteSuperiorRendimiento'])=="") {
+                $limiteSuperiorRendimiento=$limites_int_superiores[9];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorRendimiento=test_input($_POST['limiteSuperiorRendimiento']);
+            }
+            if (test_input($_POST['limiteSuperiorCeniza'])=="") {
+                $limiteSuperiorCeniza=$limites_int_superiores[10];
+            } else {
+                $nuevo=true;
+                $limiteSuperiorCeniza=test_input($_POST['limiteSuperiorCeniza']);
+            }
+            $o1=$limiteInferiorResistencia.",".$limiteSuperiorResistencia.",".$unidades_medida[1];
+            $o2=$limiteInferiorHinchamiento.",".$limiteSuperiorHinchamiento.",".$unidades_medida[2];
+            $o3=$limiteInferiorAmplitud.",".$limiteSuperiorAmplitud.",".$unidades_medida[3];
+            $o4=$limiteInferiorHidratacion.",".$limiteSuperiorHidratacion.",".$unidades_medida[4];
+            $o5=$limiteInferiorHumedad.",".$limiteSuperiorHumedad.",".$unidades_medida[5];
+            $o6=$limiteInferiorEsfuerzo.",".$limiteSuperiorEsfuerzo.",".$unidades_medida[6];
+            $o7=$limiteInferiorAbsorcion.",".$limiteSuperiorAbsorcion.",".$unidades_medida[7];
+            $o8=$limiteInferiorEstabilidad.",".$limiteSuperiorEstabilidad.",".$unidades_medida[8];
+            $o9=$limiteInferiorRendimiento.",".$limiteSuperiorRendimiento.",".$unidades_medida[9];
+            $o10=$limiteInferiorCeniza.",".$limiteSuperiorCeniza.",".$unidades_medida[10];
+        }
+        /**
+         * si nuevo=false->inserto solo eal cliente con id=1
+         * si nuevo=true-> inserto todos los valores, obtengo el id insertado y registro al cliente
+         */
+        if(!$nuevo){
+            $id_valores_a_insertar=1;
+        }else{
+            $query_insertar_valores="INSERT INTO sistema_control_laboratorio.v_de_referencia (resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES  ('$o1','$o2','$o3','$o4','$o5','$o6','$o7','$o8','$o9','$o10');";
+            $id_valores_a_insertar = insertarYObtenerUltimoIdIsertado($query_insertar_valores);
+            // var_dump($id_valores_a_insertar);
+        }
+        $insercion_cliente="INSERT INTO sistema_control_laboratorio.clientes (id_valores,correo,domicilio,nombre,rfc,nombre_contacto,puesto_de_contacto) VALUES ($id_valores_a_insertar,'$correo','$domicilio','$nombre','$rfc','$nombreContacto','$puestoContacto');";
+        ejecutarQuery($insercion_cliente);
+        $mensajeAltaCliente="\"Cliente registrado con éxito\"";
+    }
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,43 +214,44 @@
 <body class="background">
     <div class="container mx-auto flex justify-center">
         <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm my-20 w-[28rem] overflow-y-auto h-[45rem]">
-            <h1 class="text-2xl text-center font-bold mb-7">Alta de Clientes</h1>
-            <form method="post" action="">
+            <h1 class="text-2xl text-center font-bold">Alta de Clientes</h1>
+            <span class="text-center font-bold"><?= $mensajeAltaCliente ?></span>
+            <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
                     <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">
                         Nombre
                     </label>
-                    <input type="text" name="nombre" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Panes López" required>
+                    <input type="text" name="nombre" id="nombre" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Panes López" required>
                 </div>
                 <div class="mb-4">
                     <label for="domicilio" class="block text-gray-700 text-sm font-bold mb-2">
                         Domicilio
                     </label>
-                    <textarea name="domicilio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Av. Avenida #1" cols="30" rows="3" required></textarea>
+                    <textarea name="domicilio" id="domicilio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Av. Avenida #1" cols="30" rows="3" required></textarea>
                 </div>
                 <div class="mb-4">
                     <label for="rfc" class="block text-gray-700 text-sm font-bold mb-2">
-                        RFC
+                        RFC <span class="error"><?= $errorRfc?></span>
                     </label>
-                    <input type="text" name="rfc" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required>
+                    <input type="text" name="rfc" id="rfc" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required>
                 </div>
                 <div class="mb-4">
                     <label for="nombre de contacto" class="block text-gray-700 text-sm font-bold mb-2">
                         Nombre de Contacto
                     </label>
-                    <input type="text" name="nombreContacto" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Martín Hernández" required>
+                    <input type="text" name="nombreContacto" id="nombreContacto" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Martín Hernández" required>
                 </div>
                 <div class="mb-4">
                     <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
                         Correo
                     </label>
-                    <input type="email" name="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="correocontacto@gmail.com" required>
+                    <input type="email" name="correo" id="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="correocontacto@gmail.com" required>
                 </div>
                 <div class="mb-4">
                     <label for="puesto del contacto" class="block text-gray-700 text-sm font-bold mb-2">
                         Puesto del Contacto
                     </label>
-                    <input type="text" name="puestoContacto" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="CEO" required>
+                    <input type="text" name="puestoContacto" id="puestoContacto" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="CEO" required>
                 </div>
                 <!-- Si el cliente tiene valores de referencia, entonces mostramos los siguientes campos... -->
                 <details class="mt-4">
@@ -69,8 +263,8 @@
                             Resistencia
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorResistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorResistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorResistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorResistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -78,8 +272,8 @@
                             Hinchamiento
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorHinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorHinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorHinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorHinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -87,8 +281,8 @@
                             Amplitud
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorAmplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorAmplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorAmplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorAmplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -96,8 +290,8 @@
                             Hidratación
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorHidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorHidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorHidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorHidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -105,8 +299,8 @@
                             Humedad
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorHumedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorHumedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorHumedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorHumedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <!-- Valores del farinografo -->
@@ -116,8 +310,8 @@
                             Esfuerzo
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorEsfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorEsfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorEsfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorEsfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -125,8 +319,8 @@
                             Absorción
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorAbsorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorAbsorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorAbsorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorAbsorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -134,8 +328,8 @@
                             Estabilidad
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorEstabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorEstabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorEstabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorEstabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -143,8 +337,8 @@
                             Rendimiento
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorRendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorRendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorRendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorRendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                     <div class="mt-4 mb-4">
@@ -152,8 +346,8 @@
                             Ceniza
                         </label>
                         <div class="mt-4 flex gap-2 justify-center">
-                            <input type="number" name="limiteInferiorCeniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
-                            <input type="number" name="limiteSuperiorCeniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
+                            <input type="number" step="0.01" name="limiteInferiorCeniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Inf.">
+                            <input type="number" step="0.01" name="limiteSuperiorCeniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Límite Sup.">
                         </div>
                     </div>
                 </details>

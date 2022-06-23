@@ -56,7 +56,23 @@ function ejecutarQuery(string $query){
         return $result;
     }
 }
-
-// foreach (mysqli_fetch_array($result) as $row) {
+/**
+ * obtiene el ultimo id insertado
+ * en la DB
+ */
+function insertarYObtenerUltimoIdIsertado(string $query){
+    $con = mysqli_connect(HOST, USER, PASSWORD, DB);
     
-// }
+    if (mysqli_connect_errno()) {
+        return "Failed to connect to MySQL: " . mysqli_connect_error();
+    }else{
+        mysqli_query($con, $query);
+        $id = mysqli_query($con, "SELECT LAST_INSERT_ID();");
+        $iddos = $id->fetch_array(MYSQLI_NUM);
+        $result=$iddos[0];
+
+        // cerrar conexión
+        mysqli_close($con);
+        return $result;
+    }
+}
