@@ -72,15 +72,15 @@
                 <div>
                     <h1 class="text-gray-700 text-sm font-bold mb-2">Valores de referencia</h1>
                     <div>
-                        <input type="radio" id="hide" name="valoresRef" value="ValoresReferenciaInternacionales" checked />
+                        <input type="radio" id="hide" name="valoresRef" value="ValoresReferenciaInternacionales" />
                         <label for="valores de referencia internacionales" class="text-gray-700 text-xs font-bold mb-2">Valores de Referencia Internacionales</label>
                     </div>
                     <div>
-                        <input type="radio" id="show" name="valoresRef" value="ValoresRefernciaPropios" />
+                        <input type="radio" id="show" name="valoresRef" value="ValoresRefernciaPropios" checked/>
                         <label for="valores de referencia propios" class="text-gray-700 text-xs font-bold mb-2">Valores de Referencia Propios</label>
                     </div>
                 </div>
-                <div class="hidden" id="box">
+                <div class="mt-7" id="box">
                     <h2 class="text-gray-700 text-base font-bold mb-2 mt-4 text-center">Alveógrafo</h2>
                     <div class="mt-4 mb-4">
                         <label for="resistencia" class="block text-gray-700 text-sm font-bold mb-2">

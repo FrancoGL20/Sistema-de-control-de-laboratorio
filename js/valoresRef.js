@@ -19,3 +19,5 @@ const radioAltaEquipo = document.querySelectorAll('input[name="garantia"]');
 radioAltaEquipo.forEach(radio => {
   radio.addEventListener('click', handleRadioClick);
 });
+
+window.onload = handleRadioClick();
