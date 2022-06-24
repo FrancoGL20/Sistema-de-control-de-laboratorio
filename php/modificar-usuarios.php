@@ -1,5 +1,3 @@
-<!-- ELIMINAR PRE -->
-<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
     require_once("../DB/controlarDB.php");
@@ -23,7 +21,6 @@
     $arreglo_usuarios=hacerConsulta($query_lista_usuarios);
     // print_r($arreglo_usuarios);
 ?>
-</pre>
 
 <!DOCTYPE html>
 <html lang="es">

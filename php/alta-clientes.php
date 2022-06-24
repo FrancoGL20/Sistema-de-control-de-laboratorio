@@ -15,7 +15,18 @@
         // print_r($_POST);
         #  información personal
         $nombre=test_input($_POST['nombre']);
-        $domicilio=test_input($_POST['domicilio']);
+        $arreglo_domicilio=$_POST['domicilio'];
+        $arreglo_domicilio=array_map("test_input",$arreglo_domicilio);
+        $arreglo_temporal_domicilio=[];
+        //primeros 3 datos
+        array_push($arreglo_temporal_domicilio,...array_slice($arreglo_domicilio,0,3));
+        // si hay numero interior
+        if(isset($_POST['n_interior'])){
+            array_push($arreglo_temporal_domicilio,test_input($_POST['n_interior']));
+        }
+        //resto de datos
+        array_push($arreglo_temporal_domicilio,...array_slice($arreglo_domicilio,3));
+        $domicilio=implode(", ",$arreglo_temporal_domicilio);
         $rfc=test_input($_POST['rfc']);
         $nombreContacto=test_input($_POST['nombreContacto']);
         $correo=test_input($_POST['correo']);
@@ -188,6 +199,10 @@
             $id_valores_a_insertar = insertarYObtenerUltimoIdIsertado($query_insertar_valores);
             // var_dump($id_valores_a_insertar);
         }
+        
+        /**
+         * Inserción de los datos
+         */
         $insercion_cliente="INSERT INTO sistema_control_laboratorio.clientes (id_valores,correo,domicilio,nombre,rfc,nombre_contacto,puesto_de_contacto) VALUES ($id_valores_a_insertar,'$correo','$domicilio','$nombre','$rfc','$nombreContacto','$puestoContacto');";
         ejecutarQuery($insercion_cliente);
         $mensajeAltaCliente="\"Cliente registrado con éxito\"";
@@ -218,47 +233,48 @@
             <span class="text-center font-bold"><?= $mensajeAltaCliente ?></span>
             <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
-                    <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="nombre" class="block text-gray-700 text-base font-bold mb-2">
                         Nombre
                     </label>
                     <input type="text" name="nombre" id="nombre" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Panes López" required>
                 </div>
+                <!-- DOMICILIO INICIO -->
                 <h2 class="block text-gray-700 text-base font-bold mb-2">Domicilio</h2>
                 <div class="mb-4">
                     <label for="calle" class="block text-gray-700 text-sm font-bold mb-2">
-                        Calle
+                        &nbsp;&nbsp;&nbsp;Calle
                     </label>
-                    <input type="text" name="calle" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Avenida Los Manzanos" required>
+                    <input type="text" name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Avenida Los Manzanos" required>
                 </div>
                 <div class="mb-4">
                     <label for="colonia" class="block text-gray-700 text-sm font-bold mb-2">
-                        Colonia
+                        &nbsp;&nbsp;&nbsp;Colonia
                     </label>
-                    <input type="text" name="colonia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Vista del Valle" required>
+                    <input type="text" name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Vista del Valle" required>
                 </div>
                 <div class="mb-4">
                     <label for="numero exterior" class="block text-gray-700 text-sm font-bold mb-2">
-                        Número Exterior
+                        &nbsp;&nbsp;&nbsp;Número Exterior
                     </label>
-                    <input type="number" name="numeroExterior" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="1" required>
+                    <input type="number" name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="1" required>
                 </div>
                 <div class="mb-4">
                     <label for="numero interior" class="block text-gray-700 text-sm font-bold mb-2">
-                        Número Interior (Opcional)
+                        &nbsp;&nbsp;&nbsp;Número Interior (Opcional)
                     </label>
-                    <input type="number" name="numeroInt" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="22" required>
+                    <input type="number" name="n_interior" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="22" >
                 </div>
                 <div class="mb-4">
                     <label for="municipio" class="block text-gray-700 text-sm font-bold mb-2">
-                        Municipio
+                        &nbsp;&nbsp;&nbsp;Municipio
                     </label>
-                    <input type="text" name="municipio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Álvaro Obregón" required>
+                    <input type="text" name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Álvaro Obregón" required>
                 </div>
                 <div class="mb-4">
                     <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">
-                        Estado
+                        &nbsp;&nbsp;&nbsp;Estado
                     </label>
-                    <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500">
+                    <select name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
                         <option value="" selected disabled>Seleccione el estado...</option>
                         <option value="Aguascalientes">Aguascalientes</option>
                         <option value="Baja California">Baja California</option>
@@ -296,30 +312,31 @@
                 </div>
                 <div class="mb-4">
                     <label for="codigo postal" class="block text-gray-700 text-sm font-bold mb-2">
-                        Código Postal
+                        &nbsp;&nbsp;&nbsp;Código Postal
                     </label>
-                    <input type="number" name="codigoPostal" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="53476" required>
+                    <input type="number" name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="53476" required>
                 </div>
                 <div class="mb-4">
-                    <label for="rfc" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="rfc" class="block text-gray-700 text-base font-bold mb-2">
                         RFC <span class="error"><?= $errorRfc?></span>
                     </label>
                     <input type="text" name="rfc" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required>
                 </div>
+                <!-- DOMICILIO FIN -->
                 <div class="mb-4">
-                    <label for="nombre de contacto" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="nombre de contacto" class="block text-gray-700 text-base font-bold mb-2">
                         Nombre de Contacto
                     </label>
                     <input type="text" name="nombreContacto" id="nombreContacto" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Martín Hernández" required>
                 </div>
                 <div class="mb-4">
-                    <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="correo" class="block text-gray-700 text-base font-bold mb-2">
                         Correo
                     </label>
                     <input type="email" name="correo" id="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="correocontacto@gmail.com" required>
                 </div>
                 <div class="mb-4">
-                    <label for="puesto del contacto" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="puesto del contacto" class="block text-gray-700 text-base font-bold mb-2">
                         Puesto del Contacto
                     </label>
                     <input type="text" name="puestoContacto" id="puestoContacto" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="CEO" required>

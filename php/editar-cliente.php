@@ -1,6 +1,40 @@
+<!-- ELIMINAR PRE -->
+<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    function estadoALetra($estado){
+        switch ($estado){
+            case "1":
+                $estado="Dado de baja";
+                break;
+            case "2":
+                $estado="Inactivo";
+                break;
+            case "3":
+                $estado="Activo";
+                break;
+            default:
+                $estado="Estado invalido";
+        }
+        return $estado;
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        $id=test_input($_GET['i']);
+        $query_info_cliente="SELECT * FROM clientes WHERE id_cliente='$id'";
+        $info_cliente=hacerConsulta($query_info_cliente)[0];
+        var_dump($info_cliente);
+        $domicilio_arreglo=explode(", ", $info_cliente['domicilio']);
+    }
+
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -28,92 +62,92 @@
                         Estado
                     </label>
                     <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
-                        <option value="1" selected>Activo</option>
-                        <option value="2">Inactivo</option>
-                        <option value="3">Baja</option>
+                        <option value="1" <?= $info_cliente['estado']=="1"?"selected":"" ?>>Dado de baja</option>
+                        <option value="2" <?= $info_cliente['estado']=="2"?"selected":"" ?>>Inactivo</option>
+                        <option value="3" <?= $info_cliente['estado']=="3"?"selected":"" ?>>Activo</option>
                     </select>
                 </div>
                 <div class="mb-4">
                     <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">
                         Nombre
                     </label>
-                    <input type="text" name="nombre" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Panes López" required>
+                    <input type="text" name="nombre" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Panes López" required value=" <?= $info_cliente['nombre'] ?>">
                 </div>
                 <h2 class="block text-gray-700 text-base font-bold mb-2">Domicilio</h2>
                 <div class="mb-4">
                     <label for="calle" class="block text-gray-700 text-sm font-bold mb-2">
-                        Calle
+                        &nbsp;&nbsp;&nbsp;Calle
                     </label>
-                    <input type="text" name="calle" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Avenida Los Manzanos" required>
+                    <input type="text" name="calle" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Avenida Los Manzanos" required value="<?= $domicilio_arreglo[0]?>">
                 </div>
                 <div class="mb-4">
                     <label for="colonia" class="block text-gray-700 text-sm font-bold mb-2">
-                        Colonia
+                        &nbsp;&nbsp;&nbsp;Colonia
                     </label>
-                    <input type="text" name="colonia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Vista del Valle" required>
+                    <input type="text" name="colonia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Vista del Valle" required value="<?= $domicilio_arreglo[1]?>">
                 </div>
                 <div class="mb-4">
                     <label for="numero exterior" class="block text-gray-700 text-sm font-bold mb-2">
-                        Número Exterior
+                        &nbsp;&nbsp;&nbsp;Número Exterior
                     </label>
-                    <input type="number" name="numeroExterior" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="1" required>
+                    <input type="number" name="numeroExterior" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="1" required value="<?= $domicilio_arreglo[2]?>">
                 </div>
                 <div class="mb-4">
                     <label for="numero interior" class="block text-gray-700 text-sm font-bold mb-2">
-                        Número Interior (Opcional)
+                        &nbsp;&nbsp;&nbsp;Número Interior (Opcional)
                     </label>
-                    <input type="number" name="numeroInt" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="22" required>
+                    <input type="number" name="numeroInt" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="22" required value="<?= $domicilio_arreglo[3]?>">
                 </div>
                 <div class="mb-4">
                     <label for="municipio" class="block text-gray-700 text-sm font-bold mb-2">
-                        Municipio
+                        &nbsp;&nbsp;&nbsp;Municipio
                     </label>
-                    <input type="text" name="municipio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Álvaro Obregón" required>
+                    <input type="text" name="municipio" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Álvaro Obregón" required value="<?= $domicilio_arreglo[4]?>">
                 </div>
                 <div class="mb-4">
                     <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">
-                        Estado
+                        &nbsp;&nbsp;&nbsp;Estado
                     </label>
-                    <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500">
-                        <option value="Aguascalientes">Aguascalientes</option>
-                        <option value="Baja California">Baja California</option>
-                        <option value="Baja California Sur">Baja California Sur</option>
-                        <option value="Campeche">Campeche</option>
-                        <option value="Chiapas">Chiapas</option>
-                        <option value="Chihuahua">Chihuahua</option>
-                        <option value="CDMX">Ciudad de México</option>
-                        <option value="Coahuila">Coahuila</option>
-                        <option value="Colima">Colima</option>
-                        <option value="Durango">Durango</option>
-                        <option value="Estado de México" selected>Estado de México</option>
-                        <option value="Guanajuato">Guanajuato</option>
-                        <option value="Guerrero">Guerrero</option>
-                        <option value="Hidalgo">Hidalgo</option>
-                        <option value="Jalisco">Jalisco</option>
-                        <option value="Michoacán">Michoacán</option>
-                        <option value="Morelos">Morelos</option>
-                        <option value="Nayarit">Nayarit</option>
-                        <option value="Nuevo León">Nuevo León</option>
-                        <option value="Oaxaca">Oaxaca</option>
-                        <option value="Puebla">Puebla</option>
-                        <option value="Querétaro">Querétaro</option>
-                        <option value="Quintana Roo">Quintana Roo</option>
-                        <option value="San Luis Potosí">San Luis Potosí</option>
-                        <option value="Sinaloa">Sinaloa</option>
-                        <option value="Sonora">Sonora</option>
-                        <option value="Tabasco">Tabasco</option>
-                        <option value="Tamaulipas">Tamaulipas</option>
-                        <option value="Tlaxcala">Tlaxcala</option>
-                        <option value="Veracruz">Veracruz</option>
-                        <option value="Yucatán">Yucatán</option>
-                        <option value="Zacatecas">Zacatecas</option>
+                    <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option <?= $domicilio_arreglo[5]=="Aguascalientes"?"selected":""?> value="Aguascalientes">Aguascalientes</option>
+                        <option <?= $domicilio_arreglo[5]=="Baja California"?"selected":""?> value="Baja California">Baja California</option>
+                        <option <?= $domicilio_arreglo[5]=="Baja California Sur"?"selected":""?> value="Baja California Sur">Baja California Sur</option>
+                        <option <?= $domicilio_arreglo[5]=="Campeche"?"selected":""?> value="Campeche">Campeche</option>
+                        <option <?= $domicilio_arreglo[5]=="Chiapas"?"selected":""?> value="Chiapas">Chiapas</option>
+                        <option <?= $domicilio_arreglo[5]=="Chihuahua"?"selected":""?> value="Chihuahua">Chihuahua</option>
+                        <option <?= $domicilio_arreglo[5]=="CDMX"?"selected":""?> value="CDMX">Ciudad de México</option>
+                        <option <?= $domicilio_arreglo[5]=="Coahuila"?"selected":""?> value="Coahuila">Coahuila</option>
+                        <option <?= $domicilio_arreglo[5]=="Colima"?"selected":""?> value="Colima">Colima</option>
+                        <option <?= $domicilio_arreglo[5]=="Durango"?"selected":""?> value="Durango">Durango</option>
+                        <option <?= $domicilio_arreglo[5]=="Estado de México"?"selected":""?> value="Estado de México">Estado de México</option>
+                        <option <?= $domicilio_arreglo[5]=="Guanajuato"?"selected":""?> value="Guanajuato">Guanajuato</option>
+                        <option <?= $domicilio_arreglo[5]=="Guerrero"?"selected":""?> value="Guerrero">Guerrero</option>
+                        <option <?= $domicilio_arreglo[5]=="Hidalgo"?"selected":""?> value="Hidalgo">Hidalgo</option>
+                        <option <?= $domicilio_arreglo[5]=="Jalisco"?"selected":""?> value="Jalisco">Jalisco</option>
+                        <option <?= $domicilio_arreglo[5]=="Michoacán"?"selected":""?> value="Michoacán">Michoacán</option>
+                        <option <?= $domicilio_arreglo[5]=="Morelos"?"selected":""?> value="Morelos">Morelos</option>
+                        <option <?= $domicilio_arreglo[5]=="Nayarit"?"selected":""?> value="Nayarit">Nayarit</option>
+                        <option <?= $domicilio_arreglo[5]=="Nuevo"?"selected":""?> value="Nuevo León">Nuevo León</option>
+                        <option <?= $domicilio_arreglo[5]=="Oaxaca"?"selected":""?> value="Oaxaca">Oaxaca</option>
+                        <option <?= $domicilio_arreglo[5]=="Puebla"?"selected":""?> value="Puebla">Puebla</option>
+                        <option <?= $domicilio_arreglo[5]=="Querétaro"?"selected":""?> value="Querétaro">Querétaro</option>
+                        <option <?= $domicilio_arreglo[5]=="Quintana Roo"?"selected":""?> value="Quintana Roo">Quintana Roo</option>
+                        <option <?= $domicilio_arreglo[5]=="San Luis Potosí"?"selected":""?> value="San Luis Potosí">San Luis Potosí</option>
+                        <option <?= $domicilio_arreglo[5]=="Sinaloa"?"selected":""?> value="Sinaloa">Sinaloa</option>
+                        <option <?= $domicilio_arreglo[5]=="Sonora"?"selected":""?> value="Sonora">Sonora</option>
+                        <option <?= $domicilio_arreglo[5]=="Tabasco"?"selected":""?> value="Tabasco">Tabasco</option>
+                        <option <?= $domicilio_arreglo[5]=="Tamaulipas"?"selected":""?> value="Tamaulipas">Tamaulipas</option>
+                        <option <?= $domicilio_arreglo[5]=="Tlaxcala"?"selected":""?> value="Tlaxcala">Tlaxcala</option>
+                        <option <?= $domicilio_arreglo[5]=="Veracruz"?"selected":""?> value="Veracruz">Veracruz</option>
+                        <option <?= $domicilio_arreglo[5]=="Yucatán"?"selected":""?> value="Yucatán">Yucatán</option>
+                        <option <?= $domicilio_arreglo[5]=="Zacatecas"?"selected":""?> value="Zacatecas">Zacatecas</option>
                     </select>
                 </div>
                 <div class="mb-4">
                     <label for="codigo postal" class="block text-gray-700 text-sm font-bold mb-2">
-                        Código Postal
+                        &nbsp;&nbsp;&nbsp;Código Postal
                     </label>
-                    <input type="number" name="codigoPostal" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="53476" required>
+                    <input type="number" name="codigoPostal" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="53476" required value="<?= $domicilio_arreglo[6]?>">
                 </div>
                 <div class="mb-4">
                     <label for="rfc" class="block text-gray-700 text-sm font-bold mb-2">

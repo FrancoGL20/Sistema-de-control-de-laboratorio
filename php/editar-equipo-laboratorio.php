@@ -28,9 +28,9 @@
                         Estado
                     </label>
                     <select name="estado" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
-                        <option value="1" selected>Activo</option>
+                        <option value="1" selected>Dado de baja</option>
                         <option value="2">Inactivo</option>
-                        <option value="3">Baja</option>
+                        <option value="3">Activo</option>
                     </select>
                 </div>
                 <div class="mb-4">

@@ -1,7 +1,36 @@
 <?php
-# valida que la sesión haya sido iniciada
-# si no lo fue, se va al index y al iniciar sesión
-require_once("./validar_sesion_iniciada.php");
+    # valida que la sesión haya sido iniciada
+    # si no lo fue, se va al index y al iniciar sesión
+    require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    function estadoALetra($estado){
+        switch ($estado){
+            case "1":
+                $estado="Dado de baja";
+                break;
+            case "2":
+                $estado="Inactivo";
+                break;
+            case "3":
+                $estado="Activo";
+                break;
+            default:
+                $estado="Estado invalido";
+        }
+        return $estado;
+    }
+    $exitoEliminacion="";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // var_dump($_POST);
+        $clientes_a_eliminar=$_POST['eliminar'];
+        foreach ($clientes_a_eliminar as $cliente_a_eliminar) {
+            $query_eliminacion="DELETE FROM sistema_control_laboratorio.clientes WHERE id_cliente=$cliente_a_eliminar;";
+            ejecutarQuery($query_eliminacion);
+            $exitoEliminacion="Cliente(s) eliminado(s) con éxito";
+        }
+    }
+    $query_lista_clientes="SELECT id_cliente,nombre,correo,estado FROM clientes";
+    $arreglo_clientes=hacerConsulta($query_lista_clientes);
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +52,8 @@ require_once("./validar_sesion_iniciada.php");
     <div class="container mx-auto flex justify-center items-center content-center">
         <div class="flex flex-col p-10 mt-10">
             <h1 class="text-2xl text-center mb-4 font-bold">Clientes</h1>
-            <form method="post" action="" class="mt-0">
+            <span class="text-center font-bold"><?= $exitoEliminacion ?></span>
+            <form  method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="mt-0">
                 <div class="mt-10 overflow-y-auto h-96 rounded-xl">
                     <table class="table-auto rounded-xl border border-slate-300">
                         <thead class="rounded-lg">
@@ -36,21 +66,25 @@ require_once("./validar_sesion_iniciada.php");
                             </tr>
                         </thead>
                         <tbody class="bg-white rounded-lg">
+
+                            <?php foreach ($arreglo_clientes as $cliente): ?> 
                             <tr>
-                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Panes López</td>
-                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">martin@paneslopez.com</td>
-                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Activo</td>
+                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><?= $cliente['nombre'] ?></td>
+                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><?= $cliente['correo'] ?></td>
+                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><?= estadoALetra($cliente['estado']) ?></td>
                                 <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8 flex justify-center">
-                                    <a href="./editar-cliente.php">
+                                    <a href="./editar-cliente.php?i=<?= $cliente['id_cliente'] ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                                         </svg>
                                     </a>
                                 </td>
                                 <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8 text-center">
-                                    <input type="checkbox" name="eliminar[]" value="">
+                                    <input type="checkbox" name="eliminar[]" value="<?= $cliente['id_cliente'] ?>">
                                 </td>
                             </tr>
+                            <?php endforeach ?>
+
                         </tbody>
                     </table>
                 </div>
