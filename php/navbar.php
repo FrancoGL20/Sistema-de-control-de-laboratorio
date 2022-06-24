@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-md backdrop-blur-sm sticky top-0 z-10">
+<nav class="bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-md backdrop-blur-sm sticky top-0 z-10 print:hidden">
     <div class="px-3 mx-auto">
         <div class="flex justify-between">
             <!-- Recordar agrupar en contenedores las cosas que queremos que vayan del lado izquierdo y derecho -->
