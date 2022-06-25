@@ -22,21 +22,19 @@
             <h1 class="text-2xl text-center mb-4 font-bold">Consultar Análisis</h1>
             <form action="" method="">
                 <div class="mb-4">
-                    <label for="numero de lote" class="block text-gray-700 text-sm font-bold mb-2">
-                        ID de Análisis
+                    <label for="analisis" class="block text-gray-700 text-sm font-bold mb-2">
+                        ID Análisis
                     </label>
-                    <input type="text" name="idAnalisis" list="analisis" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Elija el lote y su número de análisis..." required>
+                    <select name="analisis" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elija el análisis...</option>
+                        <option value="1">Analisis 1 - Lote 1</option>
+                    </select>
                 </div>
                 <div class="flex items-center justify-center mt-7">
-                    <button type="submit" name="buscarLote" class="bg-slate-500 hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="submit" name="buscarAnalisis" class="bg-slate-500 hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Consultar
                     </button>
                 </div>
-                <datalist id="analisis">
-                    <option value="1">Lote 1 - Análisis 1</option>
-                    <option value="2">Lote 1 - Análisis 2</option>
-                    <option value="3">Lote 2 - Análisis 1</option>
-                </datalist>
             </form>
         </div>
         <div class="mt-7">

@@ -22,21 +22,19 @@
             <h1 class="text-2xl text-center mb-4 font-bold">Consultar Clientes</h1>
             <form action="" method="">
                 <div class="mb-4">
-                    <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
-                        Correo del Cliente
+                    <label for="cliente" class="block text-gray-700 text-sm font-bold mb-2">
+                        Cliente
                     </label>
-                    <input type="email" name="cliente" list="clientes" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Escriba el correo del cliente..." required>
+                    <select name="cliente" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elija el cliente...</option>
+                        <option value="1">Panes López</option>
+                    </select>
                 </div>
                 <div class="flex items-center justify-center mt-7">
                     <button type="submit" name="buscarCliente" class="bg-slate-500 hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Consultar
                     </button>
                 </div>
-                <datalist id="clientes">
-                    <option value="cliente1@gmail.com"></option>
-                    <option value="cliente2@hotmail.com"></option>
-                    <option value="cliente3@yahoo.com"></option>
-                </datalist>
             </form>
         </div>
         <div class="mt-7">

@@ -25,17 +25,16 @@
                     <label for="numero de lote" class="block text-gray-700 text-sm font-bold mb-2">
                         Número de Lote
                     </label>
-                    <input type="text" name="numeroLote" list="lotes" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="Escriba el número de lote..." required>
+                    <select name="lote" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elija el número de lote...</option>
+                        <option value="1">Lote tal</option>
+                    </select>
                 </div>
                 <div class="flex items-center justify-center mt-7">
                     <button type="submit" name="buscarLote" class="bg-slate-500 hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Consultar
                     </button>
                 </div>
-                <datalist id="lotes">
-                    <option value="00023571"></option>
-                    <option value="00071583"></option>
-                </datalist>
             </form>
         </div>
         <div class="mt-7">
