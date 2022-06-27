@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-06-2022 a las 05:45:46
+-- Tiempo de generación: 27-06-2022 a las 02:04:03
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -65,6 +65,14 @@ CREATE TABLE `clientes` (
   `nombre_contacto` varchar(100) DEFAULT NULL,
   `puesto_de_contacto` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `id_valores`, `correo`, `domicilio`, `nombre`, `rfc`, `estado`, `nombre_contacto`, `puesto_de_contacto`) VALUES
+(12, 20, 'correo@gmail.com', 'calle, colonia, 1, , municipio, Guerrero, 52766', 'usuario 2', 'GULF010604ER1', 3, 'contacto', 'puesto'),
+(16, 21, 'fefsefsefsefes@gmail.com', 'vdfvfd, vdfvfd, 4, , fgdfgdf, Chiapas, 52765', 'amigo', 'GULF010604ER3', 3, 'nhghn', 'jgyjygjygj');
 
 -- --------------------------------------------------------
 
@@ -142,7 +150,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `correo`, `contrasena`, `id_tipo`) VALUES
 (1, 'admin@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 3),
 (2, 'consultor@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 2),
-(3, 'visor@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 1);
+(3, 'visor@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 2);
 
 -- --------------------------------------------------------
 
@@ -169,7 +177,9 @@ CREATE TABLE `v_de_referencia` (
 --
 
 INSERT INTO `v_de_referencia` (`id_valores`, `resistencia`, `hinchamiento`, `amplitud`, `hidratacion`, `humedad`, `esfuerzo`, `absorcion`, `estabilidad`, `rendimiento`, `ceniza`) VALUES
-(1, '160,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%');
+(1, '160,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%'),
+(20, '160,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%'),
+(21, '1,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%');
 
 --
 -- Índices para tablas volcadas
@@ -249,7 +259,7 @@ ALTER TABLE `certificados`
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo_laboratorio`
@@ -273,13 +283,13 @@ ALTER TABLE `tipos_usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `v_de_referencia`
 --
 ALTER TABLE `v_de_referencia`
-  MODIFY `id_valores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_valores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
@@ -303,7 +313,7 @@ ALTER TABLE `certificados`
 -- Filtros para la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `v_de_referencia` (`id_valores`);
+  ADD CONSTRAINT `clientes_FK` FOREIGN KEY (`id_valores`) REFERENCES `v_de_referencia` (`id_valores`) ON DELETE SET NULL;
 
 --
 -- Filtros para la tabla `usuarios`

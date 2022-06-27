@@ -2,7 +2,7 @@
     require_once("./validar_sesion_iniciada.php");
     require_once("../DB/controlarDB.php");
     $exitoEliminacion="";
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
         // var_dump($_POST);
         $usuarios_a_eliminar=$_POST['eliminar'];
         foreach ($usuarios_a_eliminar as $usuario_a_eliminar) {

@@ -20,7 +20,7 @@
         return $estado;
     }
     $exitoEliminacion="";
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['eliminar'])) {
         // var_dump($_POST);
         $clientes_a_eliminar=$_POST['eliminar'];
         foreach ($clientes_a_eliminar as $cliente_a_eliminar) {
@@ -29,6 +29,7 @@
             $exitoEliminacion="Cliente(s) eliminado(s) con éxito";
         }
     }
+    // lista de clientes para imprimir
     $query_lista_clientes="SELECT id_cliente,nombre,correo,estado FROM clientes";
     $arreglo_clientes=hacerConsulta($query_lista_clientes);
 ?>
