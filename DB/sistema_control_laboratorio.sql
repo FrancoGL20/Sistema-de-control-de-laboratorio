@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-06-2022 a las 02:04:03
+-- Tiempo de generación: 28-06-2022 a las 01:21:55
 -- Versión del servidor: 10.4.22-MariaDB
 -- Versión de PHP: 8.1.2
 
@@ -71,7 +71,7 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `id_valores`, `correo`, `domicilio`, `nombre`, `rfc`, `estado`, `nombre_contacto`, `puesto_de_contacto`) VALUES
-(12, 20, 'correo@gmail.com', 'calle, colonia, 1, , municipio, Guerrero, 52766', 'usuario 2', 'GULF010604ER1', 3, 'contacto', 'puesto'),
+(12, 1, 'correo@gmail.com', 'calle, colonia, 5, 2, municipio, Guerrero, 52766', 'primero', 'GULF010604ER1', 3, 'contacto', 'puesto'),
 (16, 21, 'fefsefsefsefes@gmail.com', 'vdfvfd, vdfvfd, 4, , fgdfgdf, Chiapas, 52765', 'amigo', 'GULF010604ER3', 3, 'nhghn', 'jgyjygjygj');
 
 -- --------------------------------------------------------
@@ -88,12 +88,20 @@ CREATE TABLE `equipo_laboratorio` (
   `modelo` varchar(100) DEFAULT NULL,
   `fecha_compra` date DEFAULT NULL,
   `no_factura` varchar(100) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL,
-  `tiene_garantia` tinyint(1) DEFAULT NULL,
-  `numero_garantia` varchar(100) DEFAULT NULL,
+  `estado` int(11) DEFAULT 3,
+  `tiene_garantia` varchar(3) DEFAULT 'no',
+  `numero_garantia` varchar(100) DEFAULT '',
   `clave_mantenimiento` varchar(50) DEFAULT NULL,
-  `fecha_ultimo_mantenimiento` date DEFAULT NULL
+  `fecha_ultimo_mantenimiento` date DEFAULT NULL,
+  `venc_garantia` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `equipo_laboratorio`
+--
+
+INSERT INTO `equipo_laboratorio` (`id_equipo`, `nombre`, `descripcion`, `marca`, `modelo`, `fecha_compra`, `no_factura`, `estado`, `tiene_garantia`, `numero_garantia`, `clave_mantenimiento`, `fecha_ultimo_mantenimiento`, `venc_garantia`) VALUES
+(5, 'Farinógrafo', 'descript', 'marca', 'modelo', '2022-06-26', 'fefs', 3, 'si', 'numero', 'fesfse', '2022-06-28', '2022-06-05');
 
 -- --------------------------------------------------------
 
@@ -178,7 +186,6 @@ CREATE TABLE `v_de_referencia` (
 
 INSERT INTO `v_de_referencia` (`id_valores`, `resistencia`, `hinchamiento`, `amplitud`, `hidratacion`, `humedad`, `esfuerzo`, `absorcion`, `estabilidad`, `rendimiento`, `ceniza`) VALUES
 (1, '160,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%'),
-(20, '160,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%'),
 (21, '1,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%');
 
 --
@@ -265,7 +272,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `equipo_laboratorio`
 --
 ALTER TABLE `equipo_laboratorio`
-  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `lotes`
