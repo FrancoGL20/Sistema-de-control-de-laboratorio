@@ -56,9 +56,7 @@
         $clave_mantenimiento=test_input($_POST['claveMantenimiento']);
         $fecha_ultimo_mantenimiento=test_input($_POST['fechaUltimoMantenimiento']);
         if (!$hay_errores) {
-            $query_modificacion="UPDATE sistema_control_laboratorio.equipo_laboratorio
-            SET tiene_garantia='$tiene_garantia',clave_mantenimiento='$clave_mantenimiento',marca='$marca',no_factura='$no_factura',nombre='$nombre',fecha_compra='$fecha_compra',fecha_ultimo_mantenimiento='$fecha_ultimo_mantenimiento',descripcion='$descripcion',modelo='$modelo',estado=$estado".$parte_query_garantia."
-            WHERE id_equipo=$id;";
+            $query_modificacion="UPDATE sistema_control_laboratorio.equipo_laboratorio SET tiene_garantia='$tiene_garantia',clave_mantenimiento='$clave_mantenimiento',marca='$marca',no_factura='$no_factura',nombre='$nombre',fecha_compra='$fecha_compra',fecha_ultimo_mantenimiento='$fecha_ultimo_mantenimiento',descripcion='$descripcion',modelo='$modelo',estado=$estado $parte_query_garantia WHERE id_equipo=$id;";
             echo $query_modificacion;
             ejecutarQuery($query_modificacion);
             header("Location: ./modificar-equipo-laboratorio.php");
