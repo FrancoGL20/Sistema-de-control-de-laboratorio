@@ -1,6 +1,71 @@
+<!-- eliminar pre -->
+<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    $numeroLote="";
+    $tipoHarina="";
+    $capacidad="";
+    $fechaCreacion="";
+    $fechaCaducidad="";
+    $resistencia="";
+    $hinchamiento="";
+    $amplitud="";
+    $hidratacion="";
+    $humedad="";
+    $esfuerzo="";
+    $absorcion="";
+    $estabilidad="";
+    $rendimiento="";
+    $ceniza="";
+    $mensajeAltaLote=$errorId="";
+    $hay_error=false;
+    if ($_SERVER["REQUEST_METHOD"] == "POST"){
+        // var_dump($_POST);
+        // verificar numero de lote ya existente o no
+
+        $numeroLote=test_input($_POST['numeroLote']);
+        if(numeroRegistrosCon("select * from lotes where id_lote=$numeroLote")!="0"){
+            $hay_error=true;
+            $errorId="* Número de lote ya existente";
+        }
+        $tipoHarina=test_input($_POST['tipoHarina']);
+        $capacidad=test_input($_POST['capacidad']);
+        $fechaCreacion=test_input($_POST['fechaCreacion']);
+        $fechaCaducidad=test_input($_POST['fechaCaducidad']);
+
+        $resistencia=test_input($_POST['resistencia']);
+        $hinchamiento=test_input($_POST['hinchamiento']);
+        $amplitud=test_input($_POST['amplitud']);
+        $hidratacion=test_input($_POST['hidratacion']);
+        $humedad=test_input($_POST['humedad']);
+        $esfuerzo=test_input($_POST['esfuerzo']);
+        $absorcion=test_input($_POST['absorcion']);
+        $estabilidad=test_input($_POST['estabilidad']);
+        $rendimiento=test_input($_POST['rendimiento']);
+        $ceniza=test_input($_POST['ceniza']);
+        if (!$hay_error) {
+
+            // inserción de lote y obtengo su id
+            $query_insert_lote="INSERT INTO lotes (id_lote,capacidad,fecha_creacion,contenido,fecha_caducidad) VALUES ($numeroLote,$capacidad,'$fechaCreacion','$tipoHarina','$fechaCaducidad');";
+            ejecutarQuery($query_insert_lote);
+
+            // inserto el analisis
+            $id_lote=$numeroLote;
+            $query_insert_analisis="INSERT INTO analisis (id_lote,resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES ($id_lote,$resistencia,$hinchamiento,$amplitud,$hidratacion,$humedad,$esfuerzo,$absorcion,$estabilidad,$rendimiento,$ceniza);";
+            ejecutarQuery($query_insert_analisis);
+            $mensajeAltaLote="\"Lote dado de alta con éxito\"";
+        }
+    }
+
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,44 +86,45 @@
 <body class="background">
     <div class="container mx-auto flex justify-center">
         <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm mt-20 w-[28rem] overflow-y-auto h-[45rem] rounded-xl">
-            <h1 class="text-2xl text-center font-bold mb-7">Alta de Lote</h1>
-            <form method="post" action="">
+            <h1 class="text-2xl text-center font-bold">Alta de Lote</h1>
+            <span class="text-center font-bold"><?= $mensajeAltaLote?></span>
+            <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
-                    <label for="numero de lote" class="block text-gray-700 text-sm font-bold mb-2">
-                        Número de Lote
+                    <label for="numeroLote" class="block text-gray-700 text-sm font-bold mb-2">
+                        Número de Lote <span class="error"><?= $errorId ?></span>
                     </label>
-                    <input type="number" name="numeroLote" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="004562" required>
+                    <input type="number" name="numeroLote" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="004562" required <?= $numeroLote!=""?"value=$numeroLote":"" ?>>
                 </div>
                 <div class="mb-4">
-                    <label for="tipo de harina" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="tipoHarina" class="block text-gray-700 text-sm font-bold mb-2">
                         Tipo Harina
                     </label>
-                    <select name="contenido" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
-                        <option value="" selected disabled>Elija el tipo de harina...</option>
-                        <option value="1">Hoja de Plata</option>
-                        <option value="2">Ensenada</option>
-                        <option value="3">Osasuna</option>
-                        <option value="4">Elizondo</option>
-                        <option value="5">Maite</option>
+                    <select name="tipoHarina" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" <?= !isset($_POST)?"selected":"" ?> disabled>Elija el tipo de harina...</option>
+                        <option value="Hoja de Plata" <?= ($tipoHarina!="" && $tipoHarina=="Hoja de Plata")?"value=$tipoHarina":"" ?>>Hoja de Plata</option>
+                        <option value="Ensenada" <?= ($tipoHarina!="" && $tipoHarina=="Ensenada")?"value=$tipoHarina":"" ?>>Ensenada</option>
+                        <option value="Osasuna" <?= ($tipoHarina!="" && $tipoHarina=="Osasuna")?"value=$tipoHarina":"" ?>>Osasuna</option>
+                        <option value="Maite" <?= ($tipoHarina!="" && $tipoHarina=="Maite")?"value=$tipoHarina":"" ?>>Maite</option>
+                        <option value="Elizondo" <?= ($tipoHarina!="" && $tipoHarina=="Elizondo")?"value=$tipoHarina":"" ?>>Elizondo</option>
                     </select>
                 </div>
                 <div class="mb-4">
                     <label for="capacidad" class="block text-gray-700 text-sm font-bold mb-2">
                         Capacidad (en toneladas)
                     </label>
-                    <input type="number" name="capacidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="100" required>
+                    <input type="number" name="capacidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="100" required <?= $capacidad!=""?"value=$capacidad":"" ?>>
                 </div>
                 <div class="mb-4">
-                    <label for="fecha de creacion" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="fechaCreacion" class="block text-gray-700 text-sm font-bold mb-2">
                         Fecha de Creación
                     </label>
-                    <input type="date" name="fechaCreacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                    <input type="date" name="fechaCreacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required <?= $fechaCreacion!=""?"value=$fechaCreacion":"" ?>>
                 </div>
                 <div class="mb-4">
-                    <label for="fecha de caducidad" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="fechaCaducidad" class="block text-gray-700 text-sm font-bold mb-2">
                         Fecha de Caducidad
                     </label>
-                    <input type="date" name="fechaUltimoMantenimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                    <input type="date" name="fechaCaducidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required <?= $fechaCaducidad!=""?"value=$fechaCaducidad":"" ?>>
                 </div>
                 <!-- Datos del analisis inicial, que es obligatorio cada vez que crea un lote -->
                 <h2  class="block text-gray-700 text-lg font-bold mb-4 text-center mt-8">Análisis Inicial</h2>
@@ -69,7 +135,7 @@
                         Resistencia
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="resistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12">
+                        <input type="number" step="0.01" name="resistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required <?= $resistencia!=""?"value=$resistencia":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -77,7 +143,7 @@
                         Hinchamiento
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="hinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="8">
+                        <input type="number" step="0.01" name="hinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="8" required <?= $hinchamiento!=""?"value=$hinchamiento":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -85,7 +151,7 @@
                         Amplitud
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="amplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="5">
+                        <input type="number" step="0.01" name="amplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="5" required <?= $amplitud!=""?"value=$amplitud":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -93,7 +159,7 @@
                         Hidratación
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="hidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12">
+                        <input type="number" step="0.01" name="hidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required <?= $hidratacion!=""?"value=$hidratacion":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -101,7 +167,7 @@
                         Humedad
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="humedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="17">
+                        <input type="number" step="0.01" name="humedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="17" required <?= $humedad!=""?"value=$humedad":"" ?>>
                     </div>
                 </div>
                 <!-- Valores del farinografo -->
@@ -111,7 +177,7 @@
                         Esfuerzo
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="esfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12">
+                        <input type="number" step="0.01" name="esfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required <?= $esfuerzo!=""?"value=$esfuerzo":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -119,7 +185,7 @@
                         Absorción
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="absorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="11">
+                        <input type="number" step="0.01" name="absorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="11" required <?= $absorcion!=""?"value=$absorcion":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -127,7 +193,7 @@
                         Estabilidad
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="estabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="3">
+                        <input type="number" step="0.01" name="estabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="3" required <?= $estabilidad!=""?"value=$estabilidad":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -135,7 +201,7 @@
                         Rendimiento
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="rendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.01">
+                        <input type="number" step="0.01" name="rendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.01" required <?= $rendimiento!=""?"value=$rendimiento":"" ?>>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -143,7 +209,7 @@
                         Ceniza
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="ceniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.20">
+                        <input type="number" step="0.01" name="ceniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.20" required <?= $ceniza!=""?"value=$ceniza":"" ?>>
                     </div>
                 </div>
                 <div class="flex items-center justify-center mt-10">
