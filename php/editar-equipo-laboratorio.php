@@ -106,6 +106,13 @@
             <h1 class="text-2xl text-center font-bold mb-7">Editar Equipo de Laboratorio</h1>
             <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
+                    <label for="tipoEquipo" class="block text-gray-700 text-sm font-bold mb-2">
+                        Tipo De Equipo
+                    </label>
+                    <input type="text" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" value="<?= $nombre?>" disabled>
+                    <input type="hidden" name="tipoEquipo" id="tipoEquipo" value="<?= $nombre?>">
+                </div>
+                <div class="mb-4">
                     <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">
                         Estado
                     </label>
@@ -113,15 +120,6 @@
                         <option value="1" <?= $estado=="1"?"selected":"" ?>>Dado de baja</option>
                         <option value="2" <?= $estado=="2"?"selected":"" ?>>Inactivo</option>
                         <option value="3" <?= $estado=="3"?"selected":"" ?>>Activo</option>
-                    </select>
-                </div>
-                <div class="mb-4">
-                    <label for="tipo de equipo" class="block text-gray-700 text-sm font-bold mb-2">
-                        Tipo De Equipo
-                    </label>
-                    <select name="tipoEquipo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
-                        <option value="Alveógrafo" <?= $nombre=="Alveógrafo"?"selected":"" ?>>Alveógrafo</option>
-                        <option value="Farinógrafo" <?= $nombre=="Farinógrafo"?"selected":"" ?>>Farinógrafo</option>
                     </select>
                 </div>
                 <div class="mb-4">

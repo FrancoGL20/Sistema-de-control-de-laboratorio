@@ -13,8 +13,10 @@
     }
     // inicializaciones en caso de error
     $numeroLote=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza=$submit="";
+    // mensajes de error
     $errorId=$mensajeAltaAnalisis="";
     $hay_error=false;
+    // cuando se da de alta
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         // var_dump($_POST);
         // verificando id de lote
