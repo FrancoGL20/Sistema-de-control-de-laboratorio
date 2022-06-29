@@ -85,6 +85,15 @@
                 <h2  class="block text-gray-700 text-lg font-bold mb-4 text-center mt-8">Resultados de Análisis</h2>
                 <!-- Valores del alveografo -->
                 <h2 class="text-gray-700 text-base font-bold mb-2 mt-4 text-center">Alveógrafo</h2>
+                <div class="mb-4">
+                    <label for="alveografo" class="block text-gray-700 text-sm font-bold mb-2">
+                        Equipo
+                    </label>
+                    <select name="alveografo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elegir alveógrafo...</option>
+                        <option value="">Alveografo 1</option>
+                    </select>
+                </div>
                 <div class="mt-4 mb-4">
                     <label for="resistencia" class="block text-gray-700 text-sm font-bold mb-2">
                         Resistencia
@@ -127,6 +136,15 @@
                 </div>
                 <!-- Valores del farinografo -->
                 <h2 class="text-gray-700 text-base font-bold mb-2 mt-7 text-center">Farinógrafo</h2>
+                <div class="mb-4">
+                    <label for="farinografo" class="block text-gray-700 text-sm font-bold mb-2">
+                        Equipo
+                    </label>
+                    <select name="farinografo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elegir farinógrafo...</option>
+                        <option value="">Farinógrafo 1</option>
+                    </select>
+                </div>
                 <div class="mt-4 mb-4">
                     <label for="esfuerzo" class="block text-gray-700 text-sm font-bold mb-2">
                         Esfuerzo
