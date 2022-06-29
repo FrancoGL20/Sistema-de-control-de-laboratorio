@@ -1,6 +1,50 @@
+<!-- eliminar pre -->
+<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    $query_lista_lotes="SELECT * FROM lotes;";
+    $arreglo_lotes=hacerConsulta($query_lista_lotes);
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    // inicializaciones en caso de error
+    $numeroLote=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza=$submit="";
+    $errorId=$mensajeAltaAnalisis="";
+    $hay_error=false;
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+        // var_dump($_POST);
+        // verificando id de lote
+        $numeroLote=test_input($_POST['numeroLote']);
+        if(numeroRegistrosCon("select * from lotes where id_lote=$numeroLote")=="0"){
+            $hay_error=true;
+            $errorId="* Número de lote no existente";
+        }
+        $resistencia=test_input($_POST['resistencia']);
+        $hinchamiento=test_input($_POST['hinchamiento']);
+        $amplitud=test_input($_POST['amplitud']);
+        $hidratacion=test_input($_POST['hidratacion']);
+        $humedad=test_input($_POST['humedad']);
+        $esfuerzo=test_input($_POST['esfuerzo']);
+        $absorcion=test_input($_POST['absorcion']);
+        $estabilidad=test_input($_POST['estabilidad']);
+        $rendimiento=test_input($_POST['rendimiento']);
+        $ceniza=test_input($_POST['ceniza']);
+        if(!$hay_error){
+            // obtener numero en lote necesario
+            $query_ultimo_numero_en_lote="SELECT numero_en_lote FROM sistema_control_laboratorio.analisis WHERE id_lote=$numeroLote order by numero_en_lote desc limit 1;";
+            $numero_en_lote=((int) (hacerConsulta($query_ultimo_numero_en_lote)[0][0]))+1;
+            $query_insertar_analisis="INSERT INTO sistema_control_laboratorio.analisis (id_lote,numero_en_lote,resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES ($numeroLote,$numero_en_lote,$resistencia,$hinchamiento,$amplitud,$hidratacion,$humedad,$esfuerzo,$absorcion,$estabilidad,$rendimiento,$ceniza);";
+            ejecutarQuery($query_insertar_analisis);
+            $mensajeAltaAnalisis="\"Análisis creado con éxito\"";
+            $numeroLote=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza=$submit="";
+        }
+    }
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -22,15 +66,17 @@
     <div class="container mx-auto flex justify-center">
         <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm mt-20 w-[28rem] overflow-y-auto h-[45rem] rounded-xl">
             <h1 class="text-2xl text-center font-bold mb-7">Alta de Análisis</h1>
-            <form method="post" action="">
+            <span class="text-center font-bold"><?= $mensajeAltaAnalisis?></span>
+            <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                 <div class="mb-4">
                     <label for="numero de lote" class="block text-gray-700 text-sm font-bold mb-2">
-                        Número de Lote
+                        Número de Lote <span class="error"><?= $errorId ?></span>
                     </label>
-                    <input type="number" name="numeroLote" list="lotes" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="004562" required>
+                    <input type="number" name="numeroLote" list="lotes" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="004562" required value="<?=$numeroLote?>">
                     <datalist id="lotes">
-                        <option value="00023571"></option>
-                        <option value="00071583"></option>
+                        <?php foreach ($arreglo_lotes as $lote):?>
+                        <option value="<?= $lote['id_lote'] ?>"><?= "Capacidad de ".$lote['capacidad']." tons, contiene ".$lote['contenido'] ?></option>
+                        <?php endforeach ?>
                     </datalist>
                 </div>
                 <!-- Resultados del analisis de cada factor -->
@@ -42,7 +88,7 @@
                         Resistencia
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="resistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12">
+                        <input type="number" step="0.01" name="resistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$resistencia?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -50,7 +96,7 @@
                         Hinchamiento
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="hinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="8">
+                        <input type="number" step="0.01" name="hinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="8"  value="<?=$hinchamiento?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -58,7 +104,7 @@
                         Amplitud
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="amplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="5">
+                        <input type="number" step="0.01" name="amplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="5"  value="<?=$amplitud?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -66,7 +112,7 @@
                         Hidratación
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="hidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12">
+                        <input type="number" step="0.01" name="hidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$hidratacion?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -74,7 +120,7 @@
                         Humedad
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="humedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="17">
+                        <input type="number" step="0.01" name="humedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="17"  value="<?=$humedad?>">
                     </div>
                 </div>
                 <!-- Valores del farinografo -->
@@ -84,7 +130,7 @@
                         Esfuerzo
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="esfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12">
+                        <input type="number" step="0.01" name="esfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$esfuerzo?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -92,7 +138,7 @@
                         Absorción
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="absorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="11">
+                        <input type="number" step="0.01" name="absorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="11"  value="<?=$absorcion?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -100,7 +146,7 @@
                         Estabilidad
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="estabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="3">
+                        <input type="number" step="0.01" name="estabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="3"  value="<?=$estabilidad?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -108,7 +154,7 @@
                         Rendimiento
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="rendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.01">
+                        <input type="number" step="0.01" name="rendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.01"  value="<?=$rendimiento?>">
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -116,7 +162,7 @@
                         Ceniza
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="ceniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.20">
+                        <input type="number" step="0.01" name="ceniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.20"  value="<?=$ceniza?>">
                     </div>
                 </div>
                 <div class="flex items-center justify-center mt-10">
