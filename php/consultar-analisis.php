@@ -69,6 +69,14 @@
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Tipo de Harina</td>
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium <?= isset($_POST['analisis'])?"":"text-gray-400"?> sm:pl-6 lg:pl-8"><?= isset($_POST['analisis'])?$analisis['contenido']:"contenido"?></td>
                         </tr>
+                        <tr>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Alveógrafo</td>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">Alveografo tal o ID</td>
+                        </tr>
+                        <tr>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Farinógrafo</td>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">Farinógrafo tal o ID</td>
+                        </tr>
                     </tbody>
                 </table>
                 <table class="table-auto rounded-xl border border-slate-300 w-[34rem]">
