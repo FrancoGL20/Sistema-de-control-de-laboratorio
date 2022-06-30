@@ -1,7 +1,9 @@
 <?php
-# valida que la sesión haya sido iniciada
-# si no lo fue, se va al index y al iniciar sesión
-require_once("./validar_sesion_iniciada.php");
+    require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    $query_certificados="SELECT cer.*,cl.* FROM certificados as cer join clientes as cl on cer.id_cliente=cl.id_cliente;";
+    $arreglo_certficados=hacerConsulta($query_certificados);
+
 ?>
 
 <!DOCTYPE html>
@@ -35,12 +37,13 @@ require_once("./validar_sesion_iniciada.php");
                             </tr>
                         </thead>
                         <tbody class="bg-white rounded-lg">
+                            <?php foreach ($arreglo_certficados as $certificado):?>
                             <tr>
-                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">0004713</td>
-                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">26/06/2022</td>
-                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8 text-center">Panes López</td>
+                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><?=$certificado['id_certificado']?></td>
+                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8"><?=$certificado['fecha_certificado']?></td>
+                                <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8 text-center"><?=$certificado['nombre']?></td>
                                 <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8 flex justify-center">
-                                    <a href="./certificado.php">
+                                    <a href="./certificado.php?i=<?=$certificado['id_certificado']?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                             <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                                             <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
@@ -48,6 +51,7 @@ require_once("./validar_sesion_iniciada.php");
                                     </a>
                                 </td>
                             </tr>
+                            <?php endforeach ?>
                         </tbody>
                     </table>
                 </div>

@@ -3,27 +3,19 @@
 <?php
     require_once("./validar_sesion_iniciada.php");
     require_once("../DB/controlarDB.php");
+    $query_lista_alvs="SELECT * FROM equipo_laboratorio where nombre='Alveógrafo' and estado=3;";
+    $arreglo_alvs=hacerConsulta($query_lista_alvs);
+
+    $query_lista_farins="SELECT * FROM equipo_laboratorio where nombre='Farinógrafo' and estado=3;";
+    $arreglo_farins=hacerConsulta($query_lista_farins);
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
-    $numeroLote="";
-    $tipoHarina="";
-    $capacidad="";
-    $fechaCreacion="";
-    $fechaCaducidad="";
-    $resistencia="";
-    $hinchamiento="";
-    $amplitud="";
-    $hidratacion="";
-    $humedad="";
-    $esfuerzo="";
-    $absorcion="";
-    $estabilidad="";
-    $rendimiento="";
-    $ceniza="";
+    $alv=$fari=$numeroLote=$tipoHarina=$capacidad=$fechaCreacion=$fechaCaducidad=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza="";
+    
     $mensajeAltaLote=$errorId="";
     $hay_error=false;
     if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -35,6 +27,8 @@
             $hay_error=true;
             $errorId="* Número de lote ya existente";
         }
+        $alv=test_input($_POST['alveografo']);
+        $fari=test_input($_POST['farinografo']);
         $tipoHarina=test_input($_POST['tipoHarina']);
         $capacidad=test_input($_POST['capacidad']);
         $fechaCreacion=test_input($_POST['fechaCreacion']);
@@ -58,7 +52,8 @@
 
             // inserto el analisis
             $id_lote=$numeroLote;
-            $query_insert_analisis="INSERT INTO analisis (id_lote,resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES ($id_lote,$resistencia,$hinchamiento,$amplitud,$hidratacion,$humedad,$esfuerzo,$absorcion,$estabilidad,$rendimiento,$ceniza);";
+            $query_insert_analisis="INSERT INTO analisis (id_lote,resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza,id_alveografo,id_farinografo) VALUES ($id_lote,$resistencia,$hinchamiento,$amplitud,$hidratacion,$humedad,$esfuerzo,$absorcion,$estabilidad,$rendimiento,$ceniza,$alv,$fari);";
+            // echo $query_insert_lote;
             ejecutarQuery($query_insert_analisis);
             $mensajeAltaLote="\"Lote dado de alta con éxito\"";
         }
@@ -130,6 +125,17 @@
                 <h2  class="block text-gray-700 text-lg font-bold mb-4 text-center mt-8">Análisis Inicial</h2>
                 <!-- Valores del alveografo -->
                 <h2 class="text-gray-700 text-base font-bold mb-2 mt-4 text-center">Alveógrafo</h2>
+                <div class="mb-4">
+                    <label for="alveografo" class="block text-gray-700 text-sm font-bold mb-2">
+                        Equipo
+                    </label>
+                    <select name="alveografo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elegir alveógrafo...</option>
+                        <?php foreach ($arreglo_alvs as $alv):?>
+                        <option value="<?= $alv['id_equipo'] ?>"><?= "Alveógrafo ".$alv['id_equipo'].", marca: ".$alv['marca'].", modelo: ".$alv['modelo'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
                 <div class="mt-4 mb-4">
                     <label for="resistencia" class="block text-gray-700 text-sm font-bold mb-2">
                         Resistencia
@@ -172,6 +178,17 @@
                 </div>
                 <!-- Valores del farinografo -->
                 <h2 class="text-gray-700 text-base font-bold mb-2 mt-7 text-center">Farinógrafo</h2>
+                <div class="mb-4">
+                    <label for="farinografo" class="block text-gray-700 text-sm font-bold mb-2">
+                        Equipo
+                    </label>
+                    <select name="farinografo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elegir farinógrafo...</option>
+                        <?php foreach ($arreglo_farins as $farin):?>
+                        <option value="<?= $farin['id_equipo'] ?>"><?= "Farinógrafo ".$farin['id_equipo'].", marca: ".$farin['marca'].", modelo: ".$farin['modelo'] ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
                 <div class="mt-4 mb-4">
                     <label for="esfuerzo" class="block text-gray-700 text-sm font-bold mb-2">
                         Esfuerzo

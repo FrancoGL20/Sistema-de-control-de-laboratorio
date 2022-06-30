@@ -24,7 +24,7 @@
         // var_dump($_POST);
         $equipos_a_eliminar=$_POST['eliminar'];
         foreach ($equipos_a_eliminar as $equipo_a_eliminar) {
-            $query_eliminacion="DELETE FROM sistema_control_laboratorio.equipo_laboratorio WHERE id_equipo=$equipo_a_eliminar;";
+            $query_eliminacion="DELETE FROM equipo_laboratorio WHERE id_equipo=$equipo_a_eliminar;";
             ejecutarQuery($query_eliminacion);
             $exitoEliminacion="Equipo(s) eliminado(s) con éxito";
         }

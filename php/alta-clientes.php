@@ -195,7 +195,7 @@
         if(!$nuevo){
             $id_valores_a_insertar=1;
         }else{
-            $query_insertar_valores="INSERT INTO sistema_control_laboratorio.v_de_referencia (resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES  ('$o1','$o2','$o3','$o4','$o5','$o6','$o7','$o8','$o9','$o10');";
+            $query_insertar_valores="INSERT INTO v_de_referencia (resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES  ('$o1','$o2','$o3','$o4','$o5','$o6','$o7','$o8','$o9','$o10');";
             $id_valores_a_insertar = insertarYObtenerUltimoIdIsertado($query_insertar_valores);
             // var_dump($id_valores_a_insertar);
         }
@@ -203,7 +203,7 @@
         /**
          * Inserción de los datos
          */
-        $insercion_cliente="INSERT INTO sistema_control_laboratorio.clientes (id_valores,correo,domicilio,nombre,rfc,nombre_contacto,puesto_de_contacto) VALUES ($id_valores_a_insertar,'$correo','$domicilio','$nombre','$rfc','$nombreContacto','$puestoContacto');";
+        $insercion_cliente="INSERT INTO clientes (id_valores,correo,domicilio,nombre,rfc,nombre_contacto,puesto_de_contacto) VALUES ($id_valores_a_insertar,'$correo','$domicilio','$nombre','$rfc','$nombreContacto','$puestoContacto');";
         ejecutarQuery($insercion_cliente);
         $mensajeAltaCliente="\"Cliente registrado con éxito\"";
     }

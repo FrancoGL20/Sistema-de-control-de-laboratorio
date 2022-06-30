@@ -6,7 +6,7 @@
         // var_dump($_POST);
         $usuarios_a_eliminar=$_POST['eliminar'];
         foreach ($usuarios_a_eliminar as $usuario_a_eliminar) {
-            $query_eliminacion="DELETE FROM sistema_control_laboratorio.usuarios WHERE id_usuario=$usuario_a_eliminar;";
+            $query_eliminacion="DELETE FROM usuarios WHERE id_usuario=$usuario_a_eliminar;";
             ejecutarQuery($query_eliminacion);
             $exitoEliminacion="Usuario(s) eliminado(s) con éxito";
         }

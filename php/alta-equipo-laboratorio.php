@@ -43,7 +43,7 @@
         $fecha_ultimo_mantenimiento=test_input($_POST['fechaUltimoMantenimiento']);
 
         if (!$hay_errores) {
-            $query_insercion_equipo="INSERT INTO sistema_control_laboratorio.equipo_laboratorio (nombre,descripcion,marca,modelo,fecha_compra,no_factura,tiene_garantia".$parte_query_garantia.",clave_mantenimiento,fecha_ultimo_mantenimiento) VALUES ('$nombre','$descripcion','$marca','$modelo','$fecha_compra','$no_factura','$tiene_garantia'".$parte_values_garantia.",'$clave_mantenimiento','$fecha_ultimo_mantenimiento');";
+            $query_insercion_equipo="INSERT INTO equipo_laboratorio (nombre,descripcion,marca,modelo,fecha_compra,no_factura,tiene_garantia".$parte_query_garantia.",clave_mantenimiento,fecha_ultimo_mantenimiento) VALUES ('$nombre','$descripcion','$marca','$modelo','$fecha_compra','$no_factura','$tiene_garantia'".$parte_values_garantia.",'$clave_mantenimiento','$fecha_ultimo_mantenimiento');";
             // echo $query_insercion_equipo;
             ejecutarQuery($query_insercion_equipo);
             $mensajeAltaEquipo="\"Equipo dado de alta con éxito\"";

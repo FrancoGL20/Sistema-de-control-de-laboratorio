@@ -47,7 +47,7 @@
                 $id_valores=1;
             }else{ // ***prop a int
                 // eliminar el prop anterior
-                $query_borrar_valores="DELETE FROM sistema_control_laboratorio.v_de_referencia WHERE id_valores={$_POST['id_valores']};";
+                $query_borrar_valores="DELETE FROM v_de_referencia WHERE id_valores={$_POST['id_valores']};";
                 ejecutarQuery($query_borrar_valores);
                 // colocar id en 1
                 $id_valores=1;
@@ -93,14 +93,14 @@
             $o10=$limiteInferiorCeniza.",".$limiteSuperiorCeniza.",".$unidades_medida[10];
             if($_POST['id_valores']=="1"){ // ***int a prop
                 // insertar los nuevos
-                $query_insertar_valores="INSERT INTO sistema_control_laboratorio.v_de_referencia (resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES  ('$o1','$o2','$o3','$o4','$o5','$o6','$o7','$o8','$o9','$o10');";
+                $query_insertar_valores="INSERT INTO v_de_referencia (resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES  ('$o1','$o2','$o3','$o4','$o5','$o6','$o7','$o8','$o9','$o10');";
                 // obtener el id de los nuevos y asignarlo
                 $id_valores = insertarYObtenerUltimoIdIsertado($query_insertar_valores);
             }else{ // ***prop a prop
                 // el id se queda como estaba antes
                 $id_valores=$_POST['id_valores'];
                 // actualiza el registro
-                $query_actualizar_valores="UPDATE sistema_control_laboratorio.v_de_referencia SET resistencia='$o1',hinchamiento='$o2',amplitud='$o3',hidratacion='$o4',humedad='$o5',esfuerzo='$o6',absorcion='$o7',estabilidad='$o8',rendimiento='$o9',ceniza='$o10' WHERE id_valores=$id_valores;";
+                $query_actualizar_valores="UPDATE v_de_referencia SET resistencia='$o1',hinchamiento='$o2',amplitud='$o3',hidratacion='$o4',humedad='$o5',esfuerzo='$o6',absorcion='$o7',estabilidad='$o8',rendimiento='$o9',ceniza='$o10' WHERE id_valores=$id_valores;";
                 ejecutarQuery($query_actualizar_valores);
             }
         }
@@ -116,7 +116,7 @@
         $arreglo_domicilio=$_POST['domicilio'];
         $domicilio=implode(", ",array_map("test_input",$arreglo_domicilio));
 
-        $query_actualizar_cliente="UPDATE sistema_control_laboratorio.clientes SET nombre_contacto='$nombreContacto',nombre='$nombre',id_valores=$id_valores,correo='$correo',estado=$estado,domicilio='$domicilio',rfc='$rfc',puesto_de_contacto='$puestoContacto' WHERE id_cliente=$id_cliente;";
+        $query_actualizar_cliente="UPDATE clientes SET nombre_contacto='$nombreContacto',nombre='$nombre',id_valores=$id_valores,correo='$correo',estado=$estado,domicilio='$domicilio',rfc='$rfc',puesto_de_contacto='$puestoContacto' WHERE id_cliente=$id_cliente;";
         // echo $query_actualizar_cliente;
         ejecutarQuery($query_actualizar_cliente);
         header("Location: $url/php/modificar-clientes.php");

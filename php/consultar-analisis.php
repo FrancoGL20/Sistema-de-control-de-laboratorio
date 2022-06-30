@@ -1,11 +1,11 @@
 <?php
     require_once("./validar_sesion_iniciada.php");
     require_once("../DB/controlarDB.php");
-    $query_analisis="SELECT id_analisis,id_lote,numero_en_lote FROM sistema_control_laboratorio.analisis order by id_lote asc,numero_en_lote asc;";
+    $query_analisis="SELECT id_analisis,id_lote,numero_en_lote FROM analisis order by id_lote asc,numero_en_lote asc;";
     $arreglo_analisis=hacerConsulta($query_analisis);
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['analisis'])) {
         // var_dump($_POST);
-        $query_analisis_unico="SELECT a.*,l.contenido FROM sistema_control_laboratorio.analisis as a join sistema_control_laboratorio.lotes as l on a.id_lote=l.id_lote where id_analisis={$_POST['analisis']};";
+        $query_analisis_unico="SELECT a.*,l.contenido FROM analisis as a join lotes as l on a.id_lote=l.id_lote where id_analisis={$_POST['analisis']};";
         $analisis=hacerConsulta($query_analisis_unico)[0];
         // var_dump($analisis);
     }
@@ -71,11 +71,11 @@
                         </tr>
                         <tr>
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Alveógrafo</td>
-                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">Alveografo tal o ID</td>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium <?= isset($_POST['analisis'])?"":"text-gray-400"?> sm:pl-6 lg:pl-8"><?= isset($_POST['analisis'])?$analisis['id_alveografo']:"id_alveografo"?></td>
                         </tr>
                         <tr>
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Farinógrafo</td>
-                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">Farinógrafo tal o ID</td>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium <?= isset($_POST['analisis'])?"":"text-gray-400"?> sm:pl-6 lg:pl-8"><?= isset($_POST['analisis'])?$analisis['id_farinografo']:"id_farinografo"?></td>
                         </tr>
                     </tbody>
                 </table>

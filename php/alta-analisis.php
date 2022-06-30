@@ -19,7 +19,7 @@
         return $data;
     }
     // inicializaciones en caso de error
-    $numeroLote=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza=$submit="";
+    $alv=$fari=$numeroLote=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza=$submit="";
     // mensajes de error
     $errorId=$mensajeAltaAnalisis="";
     $hay_error=false;
@@ -32,6 +32,8 @@
             $hay_error=true;
             $errorId="* Número de lote no existente";
         }
+        $alv=test_input($_POST['alveografo']);
+        $fari=test_input($_POST['farinografo']);
         $resistencia=test_input($_POST['resistencia']);
         $hinchamiento=test_input($_POST['hinchamiento']);
         $amplitud=test_input($_POST['amplitud']);
@@ -44,11 +46,11 @@
         $ceniza=test_input($_POST['ceniza']);
         if(!$hay_error){
             // obtener numero en lote necesario
-            $query_ultimo_numero_en_lote="SELECT numero_en_lote FROM sistema_control_laboratorio.analisis WHERE id_lote=$numeroLote order by numero_en_lote desc limit 1;";
+            $query_ultimo_numero_en_lote="SELECT numero_en_lote FROM analisis WHERE id_lote=$numeroLote order by numero_en_lote desc limit 1;";
             $numero_en_lote=((int) (hacerConsulta($query_ultimo_numero_en_lote)[0][0]))+1;
-            $query_insertar_analisis="INSERT INTO sistema_control_laboratorio.analisis (id_lote,numero_en_lote,resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza) VALUES ($numeroLote,$numero_en_lote,$resistencia,$hinchamiento,$amplitud,$hidratacion,$humedad,$esfuerzo,$absorcion,$estabilidad,$rendimiento,$ceniza);";
-            echo $query_insertar_analisis;
-            //// ejecutarQuery($query_insertar_analisis);
+            $query_insertar_analisis="INSERT INTO analisis (id_lote,numero_en_lote,resistencia,hinchamiento,amplitud,hidratacion,humedad,esfuerzo,absorcion,estabilidad,rendimiento,ceniza,id_alveografo,id_farinografo) VALUES ($numeroLote,$numero_en_lote,$resistencia,$hinchamiento,$amplitud,$hidratacion,$humedad,$esfuerzo,$absorcion,$estabilidad,$rendimiento,$ceniza,$alv,$fari);";
+            // echo $query_insertar_analisis;
+            ejecutarQuery($query_insertar_analisis);
             $mensajeAltaAnalisis="\"Análisis creado con éxito\"";
             $numeroLote=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza=$submit="";
         }

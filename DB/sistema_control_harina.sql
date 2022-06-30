@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2022 a las 01:23:39
--- Versión del servidor: 10.4.22-MariaDB
--- Versión de PHP: 8.1.2
+-- Tiempo de generación: 30-06-2022 a las 04:00:46
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `sistema_control_laboratorio`
+-- Base de datos: `sistema_control_harina`
 --
 
 -- --------------------------------------------------------
@@ -40,18 +40,19 @@ CREATE TABLE `analisis` (
   `absorcion` float DEFAULT NULL,
   `estabilidad` float DEFAULT NULL,
   `rendimiento` float DEFAULT NULL,
-  `ceniza` float DEFAULT NULL
+  `ceniza` float DEFAULT NULL,
+  `id_alveografo` int(11) DEFAULT NULL,
+  `id_farinografo` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `analisis`
 --
 
-INSERT INTO `analisis` (`id_analisis`, `id_lote`, `numero_en_lote`, `resistencia`, `hinchamiento`, `amplitud`, `hidratacion`, `humedad`, `esfuerzo`, `absorcion`, `estabilidad`, `rendimiento`, `ceniza`) VALUES
-(1, 1231323, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9),
-(3, 123, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9),
-(4, 232, 1, 32, 323, 232, 3232, 32, 32, 3232, 323, 232, 32),
-(5, 1234, 1, 1, 1, 11, 1, 1, 1, 11, 1, 1, 1);
+INSERT INTO `analisis` (`id_analisis`, `id_lote`, `numero_en_lote`, `resistencia`, `hinchamiento`, `amplitud`, `hidratacion`, `humedad`, `esfuerzo`, `absorcion`, `estabilidad`, `rendimiento`, `ceniza`, `id_alveografo`, `id_farinografo`) VALUES
+(6, 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 5),
+(7, 11, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 5),
+(8, 11, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 5);
 
 -- --------------------------------------------------------
 
@@ -62,11 +63,18 @@ INSERT INTO `analisis` (`id_analisis`, `id_lote`, `numero_en_lote`, `resistencia
 CREATE TABLE `certificados` (
   `id_certificado` int(11) NOT NULL,
   `id_cliente` int(11) DEFAULT NULL,
-  `id_equipo` int(11) DEFAULT NULL,
   `fecha_certificado` date DEFAULT NULL,
   `id_analisis` int(11) DEFAULT NULL,
   `cantidad_en_tons` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `certificados`
+--
+
+INSERT INTO `certificados` (`id_certificado`, `id_cliente`, `fecha_certificado`, `id_analisis`, `cantidad_en_tons`) VALUES
+(1, 12, '2022-06-30', 6, 223),
+(2, 16, '2022-06-30', 7, 323);
 
 -- --------------------------------------------------------
 
@@ -91,8 +99,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id_cliente`, `id_valores`, `correo`, `domicilio`, `nombre`, `rfc`, `estado`, `nombre_contacto`, `puesto_de_contacto`) VALUES
-(12, 1, 'correo@gmail.com', 'calle, colonia, 5, 2, municipio, Guerrero, 52766', 'primero', 'GULF010604ER1', 3, 'contacto', 'puesto'),
-(16, 21, 'fefsefsefsefes@gmail.com', 'vdfvfd, vdfvfd, 4, , fgdfgdf, Chiapas, 52765', 'amigo', 'GULF010604ER3', 3, 'nhghn', 'jgyjygjygj');
+(12, 1, 'correo@gmail.com', 'calle, colonia, 5, 2, municipio, Guerrero, 52766', 'empresa 1', 'GULF010604ER1', 3, 'contacto', 'puesto'),
+(16, 21, 'fefsefsefsefes@gmail.com', 'vdfvfd, vdfvfd, 4, , fgdfgdf, Chiapas, 52765', 'panaderia de juan', 'GULF010604ER3', 3, 'nhghn', 'jgyjygjygj');
 
 -- --------------------------------------------------------
 
@@ -121,7 +129,8 @@ CREATE TABLE `equipo_laboratorio` (
 --
 
 INSERT INTO `equipo_laboratorio` (`id_equipo`, `nombre`, `descripcion`, `marca`, `modelo`, `fecha_compra`, `no_factura`, `estado`, `tiene_garantia`, `numero_garantia`, `clave_mantenimiento`, `fecha_ultimo_mantenimiento`, `venc_garantia`) VALUES
-(5, 'Farinógrafo', 'descript', 'marca', 'modelo', '2022-06-26', 'fefs', 3, 'si', 'numero 2', 'fesfse', '2022-06-28', '2022-06-01');
+(5, 'Farinógrafo', 'descrip', 'marca', 'modelo', '2022-06-26', 'fefs', 3, 'si', 'numero 2', 'fesfse', '2022-06-28', '2022-06-01'),
+(6, 'Alveógrafo', 'descripcion', 'marquita', 'modelo', '2022-06-29', 'gfdgdgrgdrg', 3, 'no', '', 'fesfse', '2022-06-30', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -142,6 +151,7 @@ CREATE TABLE `lotes` (
 --
 
 INSERT INTO `lotes` (`id_lote`, `capacidad`, `fecha_creacion`, `contenido`, `fecha_caducidad`) VALUES
+(11, 111, '2022-06-01', 'Ensenada', '2022-06-01'),
 (123, 320, '2022-06-28', 'Hoja de Plata', '2022-06-29'),
 (232, 213, '2022-06-16', 'Ensenada', '2022-06-30'),
 (1234, 213, '2022-06-09', 'Osasuna', '2022-06-14'),
@@ -215,7 +225,7 @@ CREATE TABLE `v_de_referencia` (
 --
 
 INSERT INTO `v_de_referencia` (`id_valores`, `resistencia`, `hinchamiento`, `amplitud`, `hidratacion`, `humedad`, `esfuerzo`, `absorcion`, `estabilidad`, `rendimiento`, `ceniza`) VALUES
-(1, '160,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%'),
+(1, '161,250,W', '19,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.22,0.5,%'),
 (21, '1,250,W', '20,25,G', '0.4,0.7,P/L', '50,70,%', '14,15,%', '400,600,UB', '50,70,%', '18,23,FU', '60,75,%', '0.23,0.5,%');
 
 --
@@ -227,7 +237,9 @@ INSERT INTO `v_de_referencia` (`id_valores`, `resistencia`, `hinchamiento`, `amp
 --
 ALTER TABLE `analisis`
   ADD PRIMARY KEY (`id_analisis`),
-  ADD KEY `analisis_FK` (`id_lote`);
+  ADD KEY `analisis_FK` (`id_lote`),
+  ADD KEY `analisis_FK_1` (`id_alveografo`),
+  ADD KEY `analisis_FK_2` (`id_farinografo`);
 
 --
 -- Indices de la tabla `certificados`
@@ -235,7 +247,6 @@ ALTER TABLE `analisis`
 ALTER TABLE `certificados`
   ADD PRIMARY KEY (`id_certificado`),
   ADD KEY `certificados_FK` (`id_cliente`),
-  ADD KEY `certificados_FK_1` (`id_equipo`),
   ADD KEY `certificados_FK_2` (`id_analisis`);
 
 --
@@ -284,13 +295,13 @@ ALTER TABLE `v_de_referencia`
 -- AUTO_INCREMENT de la tabla `analisis`
 --
 ALTER TABLE `analisis`
-  MODIFY `id_analisis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_analisis` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `certificados`
 --
 ALTER TABLE `certificados`
-  MODIFY `id_certificado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_certificado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -302,7 +313,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `equipo_laboratorio`
 --
 ALTER TABLE `equipo_laboratorio`
-  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_equipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
@@ -330,14 +341,15 @@ ALTER TABLE `v_de_referencia`
 -- Filtros para la tabla `analisis`
 --
 ALTER TABLE `analisis`
-  ADD CONSTRAINT `analisis_FK` FOREIGN KEY (`id_lote`) REFERENCES `lotes` (`id_lote`);
+  ADD CONSTRAINT `analisis_FK` FOREIGN KEY (`id_lote`) REFERENCES `lotes` (`id_lote`),
+  ADD CONSTRAINT `analisis_FK_1` FOREIGN KEY (`id_alveografo`) REFERENCES `equipo_laboratorio` (`id_equipo`),
+  ADD CONSTRAINT `analisis_FK_2` FOREIGN KEY (`id_farinografo`) REFERENCES `equipo_laboratorio` (`id_equipo`);
 
 --
 -- Filtros para la tabla `certificados`
 --
 ALTER TABLE `certificados`
   ADD CONSTRAINT `certificados_FK` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
-  ADD CONSTRAINT `certificados_FK_1` FOREIGN KEY (`id_equipo`) REFERENCES `equipo_laboratorio` (`id_equipo`),
   ADD CONSTRAINT `certificados_FK_2` FOREIGN KEY (`id_analisis`) REFERENCES `analisis` (`id_analisis`);
 
 --

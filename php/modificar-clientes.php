@@ -24,7 +24,7 @@
         // var_dump($_POST);
         $clientes_a_eliminar=$_POST['eliminar'];
         foreach ($clientes_a_eliminar as $cliente_a_eliminar) {
-            $query_eliminacion="DELETE FROM sistema_control_laboratorio.clientes WHERE id_cliente=$cliente_a_eliminar;";
+            $query_eliminacion="DELETE FROM clientes WHERE id_cliente=$cliente_a_eliminar;";
             ejecutarQuery($query_eliminacion);
             $exitoEliminacion="Cliente(s) eliminado(s) con éxito";
         }

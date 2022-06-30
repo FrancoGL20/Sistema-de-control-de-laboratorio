@@ -54,7 +54,7 @@
         $o9=$limiteInferiorRendimiento.",".$limiteSuperiorRendimiento.",".$unidadRendimiento;
         $o10=$limiteInferiorCeniza.",".$limiteSuperiorCeniza.",".$unidadCeniza;
 
-        $query_update_valores="UPDATE sistema_control_laboratorio.v_de_referencia SET resistencia='$o1',hidratacion='$o4',amplitud='$o3',hinchamiento='$o2',esfuerzo='$o6',humedad='$o5',estabilidad='$o8',absorcion='$o7',ceniza='$o10',rendimiento='$o9' WHERE id_valores=1;";
+        $query_update_valores="UPDATE v_de_referencia SET resistencia='$o1',hidratacion='$o4',amplitud='$o3',hinchamiento='$o2',esfuerzo='$o6',humedad='$o5',estabilidad='$o8',absorcion='$o7',ceniza='$o10',rendimiento='$o9' WHERE id_valores=1;";
         ejecutarQuery($query_update_valores);
         $mensajeUpdateValores="\"Valores Internacionales cambiados con éxito\"";
     }

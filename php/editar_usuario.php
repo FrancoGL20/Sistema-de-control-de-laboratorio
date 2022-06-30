@@ -20,7 +20,7 @@
             $contrasenaHasheada = password_hash($contrasena, PASSWORD_DEFAULT);
             $cambiarContrasena=",contrasena='$contrasenaHasheada'";
         }
-        $query_modificacion="UPDATE sistema_control_laboratorio.usuarios
+        $query_modificacion="UPDATE usuarios
         SET correo='$correo',id_tipo=$tipoPerfil".$cambiarContrasena."
         WHERE id_usuario=$id;";
         ejecutarQuery($query_modificacion);
