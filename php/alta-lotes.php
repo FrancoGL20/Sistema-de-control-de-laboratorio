@@ -105,7 +105,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="capacidad" class="block text-gray-700 text-sm font-bold mb-2">
-                        Capacidad (en toneladas)
+                        Cantidad (en toneladas)
                     </label>
                     <input type="number" name="capacidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="100" required <?= $capacidad!=""?"value=$capacidad":"" ?>>
                 </div>

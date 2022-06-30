@@ -239,10 +239,11 @@
                     <input type="number" name="domicilio[]" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="53476" required value="<?= $domicilio_arreglo[6]?>">
                 </div>
                 <div class="mb-4">
-                    <label for="rfc" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="x" class="block text-gray-700 text-sm font-bold mb-2">
                         RFC
                     </label>
-                    <input type="text" name="rfc" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required value="<?= $info_cliente['rfc'] ?>">
+                    <input type="text" name="x" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="RTQW876542WE" required value="<?= $info_cliente['rfc'] ?>" disabled>
+                    <input type="hidden" name="rfc" required value="<?= $info_cliente['rfc'] ?>">
                 </div>
                 <div class="mb-4">
                     <label for="nombre de contacto" class="block text-gray-700 text-sm font-bold mb-2">
