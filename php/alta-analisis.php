@@ -111,7 +111,7 @@
                         Resistencia
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="resistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$resistencia?>">
+                        <input type="number" step="0.01" name="resistencia" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$resistencia?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -119,7 +119,7 @@
                         Hinchamiento
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="hinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="8"  value="<?=$hinchamiento?>">
+                        <input type="number" step="0.01" name="hinchamiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="8"  value="<?=$hinchamiento?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -127,7 +127,7 @@
                         Amplitud
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="amplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="5"  value="<?=$amplitud?>">
+                        <input type="number" step="0.01" name="amplitud" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="5"  value="<?=$amplitud?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -135,7 +135,7 @@
                         Hidratación
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="hidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$hidratacion?>">
+                        <input type="number" step="0.01" name="hidratacion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$hidratacion?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -143,7 +143,7 @@
                         Humedad
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="humedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="17"  value="<?=$humedad?>">
+                        <input type="number" step="0.01" name="humedad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="17"  value="<?=$humedad?>" required>
                     </div>
                 </div>
                 <!-- Valores del farinografo -->
@@ -164,7 +164,7 @@
                         Esfuerzo
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="esfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$esfuerzo?>">
+                        <input type="number" step="0.01" name="esfuerzo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12"  value="<?=$esfuerzo?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -172,7 +172,7 @@
                         Absorción
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="absorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="11"  value="<?=$absorcion?>">
+                        <input type="number" step="0.01" name="absorcion" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="11"  value="<?=$absorcion?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -180,7 +180,7 @@
                         Estabilidad
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="estabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="3"  value="<?=$estabilidad?>">
+                        <input type="number" step="0.01" name="estabilidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="3"  value="<?=$estabilidad?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -188,7 +188,7 @@
                         Rendimiento
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="rendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.01"  value="<?=$rendimiento?>">
+                        <input type="number" step="0.01" name="rendimiento" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.01"  value="<?=$rendimiento?>" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -196,7 +196,7 @@
                         Ceniza
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" step="0.01" name="ceniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.20"  value="<?=$ceniza?>">
+                        <input type="number" step="0.01" name="ceniza" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="0.20"  value="<?=$ceniza?>" required>
                     </div>
                 </div>
                 <div class="flex items-center justify-center mt-10">

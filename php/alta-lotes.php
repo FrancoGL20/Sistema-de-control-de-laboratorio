@@ -56,6 +56,7 @@
             // echo $query_insert_lote;
             ejecutarQuery($query_insert_analisis);
             $mensajeAltaLote="\"Lote dado de alta con éxito\"";
+            $alv=$fari=$numeroLote=$tipoHarina=$capacidad=$fechaCreacion=$fechaCaducidad=$resistencia=$hinchamiento=$amplitud=$hidratacion=$humedad=$esfuerzo=$absorcion=$estabilidad=$rendimiento=$ceniza="";
         }
     }
 
@@ -95,7 +96,7 @@
                         Tipo Harina
                     </label>
                     <select name="tipoHarina" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
-                        <option value="" <?= !isset($_POST)?"selected":"" ?> disabled>Elija el tipo de harina...</option>
+                        <option value="" selected disabled>Elija el tipo de harina...</option>
                         <option value="Hoja de Plata" <?= ($tipoHarina!="" && $tipoHarina=="Hoja de Plata")?"value=$tipoHarina":"" ?>>Hoja de Plata</option>
                         <option value="Ensenada" <?= ($tipoHarina!="" && $tipoHarina=="Ensenada")?"value=$tipoHarina":"" ?>>Ensenada</option>
                         <option value="Osasuna" <?= ($tipoHarina!="" && $tipoHarina=="Osasuna")?"value=$tipoHarina":"" ?>>Osasuna</option>
