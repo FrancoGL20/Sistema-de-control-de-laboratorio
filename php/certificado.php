@@ -1,6 +1,84 @@
+<!-- eliminar pre -->
+<pre>
 <?php
     require_once("./validar_sesion_iniciada.php");
+    require_once("../DB/controlarDB.php");
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+    // certificado
+    $id_certificado=test_input($_GET['i']);
+    $query_certificado="SELECT * FROM certificados WHERE id_certificado=$id_certificado;";
+    $certificado=hacerConsulta($query_certificado)[0];
+    // print_r($certificado);
+
+    // analisis
+    $id_analisis=$certificado['id_analisis'];
+    $query_analisis="SELECT * FROM analisis WHERE id_analisis=$id_analisis;";
+    $analisis=hacerConsulta($query_analisis)[0];
+    // print_r($analisis);
+
+    // lotes
+    $id_lote=$analisis['id_lote'];
+    $query_lote="SELECT * FROM lotes WHERE id_lote=$id_lote;";
+    $lote=hacerConsulta($query_lote)[0];
+    // print_r($lote);
+
+    // cliente
+    $id_cliente=$certificado['id_cliente'];
+    $query_cliente="SELECT * FROM clientes WHERE id_cliente=$id_cliente;";
+    $cliente=hacerConsulta($query_cliente)[0];
+    // print_r($cliente);
+
+    // valores de referencia
+    $id_valores=$cliente['id_valores'];
+    $query_valores="SELECT * FROM v_de_referencia WHERE id_valores=$id_valores;";
+    $valores_de_referencia=hacerConsulta($query_valores)[0];
+    // print_r($valores_de_referencia);
+
+    // limites inferiores, superiores y unidades de medida
+    $limites_inferiores=[];
+    $limites_superiores=[];
+    $unidades_medida=[];
+    for ($i=1; $i <= 10; $i++) {
+        $limites_inferiores[$i]=(float) (explode(',', $valores_de_referencia[$i])[0]);
+        $limites_superiores[$i]=(float) (explode(',', $valores_de_referencia[$i])[1]);
+        $unidades_medida[$i]=explode(',', $valores_de_referencia[$i])[2];
+    }
+    // print_r($limites_inferiores);
+    // print_r($limites_superiores);
+    // print_r($unidades_medida);
+
+    // arreglo de palabras de valores de referencia
+    $palabras=[];
+    $palabras[1]="Resistencia";
+    $palabras[2]="Hinchamiento";
+    $palabras[3]="Amplitud";
+    $palabras[4]="Hidratacion";
+    $palabras[5]="Humedad";
+    $palabras[6]="Esfuerzo";
+    $palabras[7]="Absorcion";
+    $palabras[8]="Estabilidad";
+    $palabras[9]="Rendimiento";
+    $palabras[10]="Ceniza";
+
+    // arreglo de los valores del analisis
+    $resultado=[];
+    $resultado[1]=(float) ($analisis['resistencia']);
+    $resultado[2]=(float) ($analisis['hinchamiento']);
+    $resultado[3]=(float) ($analisis['amplitud']);
+    $resultado[4]=(float) ($analisis['hidratacion']);
+    $resultado[5]=(float) ($analisis['humedad']);
+    $resultado[6]=(float) ($analisis['esfuerzo']);
+    $resultado[7]=(float) ($analisis['absorcion']);
+    $resultado[8]=(float) ($analisis['estabilidad']);
+    $resultado[9]=(float) ($analisis['rendimiento']);
+    $resultado[10]=(float) ($analisis['ceniza']);
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,19 +99,19 @@
         <div class="m-0">
             <img class="mx-auto w-40" src="../img/logoHarinasElizondo.png" alt="Logo de Harinas Elizondo">
             <h2 class="text-xl text-center mb-2 font-bold">Certificado de Análisis</h2>
-            <h3 class="text-xl text-center mb-2 font-bold underline">Harina Maite</h3>
+            <h3 class="text-xl text-center mb-2 font-bold underline">Harina <?= $lote['contenido'] ?></h3>
             <h4 class="text-base text-center">Solicitada por:</h4>
-            <h3 class="text-lg text-center underline">Cliente tal</h3>
+            <h3 class="text-lg text-center underline">Cliente <?= $cliente['nombre'] ?></h3>
             <div class="p-3 mt-4">
-                <p class="text-sm"><span class="font-bold">Cantidad Solicitada:</span> 20 toneladas</p>
-                <p class="text-sm"><span class="font-bold">Número de Lote:</span> 0004512</p>
-                <p class="text-sm"><span class="font-bold">Número de Análisis:</span> 12</p>
-                <p class="text-sm"><span class="font-bold">Fecha de Producción:</span> 24/06/2022</p>
-                <p class="text-sm"><span class="font-bold">Fecha de Caducidad:</span> 24/06/2022</p>
-                <p class="text-sm"><span class="font-bold">Domicilio de Entrega:</span> Tal</p>
-                <p class="text-sm"><span class="font-bold">Contacto:</span> email</p>
-                <p class="text-sm"><span class="font-bold">Nombre de Contacto:</span> Chema</p>
-                <p class="text-sm"><span class="font-bold">Puesto del Contacto:</span> CEO</p>
+                <p class="text-sm"><span class="font-bold">Cantidad Solicitada: </span><?= $certificado['cantidad_requerida'] ?> toneladas</p>
+                <p class="text-sm"><span class="font-bold">Número de Lote:</span> <?= $lote['id_lote'] ?></p>
+                <p class="text-sm"><span class="font-bold">Número de Análisis:</span> <?= $analisis['id_analisis'] ?></p>
+                <p class="text-sm"><span class="font-bold">Fecha de Producción:</span> <?= $lote['fecha_creacion'] ?></p>
+                <p class="text-sm"><span class="font-bold">Fecha de Caducidad:</span> <?= $lote['fecha_caducidad'] ?></p>
+                <p class="text-sm"><span class="font-bold">Domicilio de Entrega:</span> <?= $cliente['domicilio'] ?></p>
+                <p class="text-sm"><span class="font-bold">Contacto:</span> <?= $cliente['correo'] ?></p>
+                <p class="text-sm"><span class="font-bold">Nombre de Contacto:</span> <?= $cliente['nombre_contacto'] ?></p>
+                <p class="text-sm"><span class="font-bold">Puesto del Contacto:</span> <?= $cliente['puesto_de_contacto'] ?></p>
             </div>
             <div class="rounded-lg">
                 <table class="table-fixed rounded-xl border border-slate-300">
@@ -49,89 +127,38 @@
                         <tr>
                             <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8">Alveógrafo</td>
                         </tr>
+
+                        <?php for($i=1;$i<=10;$i++): ?>
                         <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Resistencia</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-green-400 sm:pl-6 lg:pl-8">180</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">W</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">160 - 250</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Hinchamiento</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-red-400 sm:pl-6 lg:pl-8">
-                                19
+                        <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8"><?= $palabras[$i] ?></td>
+                        <!-- resultado con color y flecha -->
+                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium sm:pl-6 lg:pl-8 <?= (($resultado[$i]>=$limites_inferiores[$i])&&($resultado[$i]<=$limites_superiores[$i]))?"text-green-400":"text-red-400"?>">
+                            <?=$resultado[$i]?>
+                            <!-- flecha o no -->
+                            <?php if ($resultado[$i]<$limites_inferiores[$i]):?>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                                 </svg>
-                            </td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">G</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">20 - 25</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Amplitud</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-red-400 sm:pl-6 lg:pl-8">
-                                0.8
+                            <?php elseif ($resultado[$i]>$limites_superiores[$i]):?>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                 </svg>
-                            </td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">P/L</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">0.4 - 0.7</td>
+                            <?php endif ?>
+                            <!-- fin de flecha o no -->
+                        </td>
+                        <!-- fin de resultado con color y flecha -->
+                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8"><?=$unidades_medida[$i]?></td>
+                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8"><?=$limites_inferiores[$i]?> - <?=$limites_superiores[$i]?></td>
                         </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Hidratación</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-green-400 sm:pl-6 lg:pl-8">65</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">%</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">50 - 70</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Humedad</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-green-400 sm:pl-6 lg:pl-8">14.5</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">%</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">14 - 15</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8">Farinógrafo</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Esfuerzo</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-green-400 sm:pl-6 lg:pl-8">575</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">UB</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">400 - 600</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Absorción</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-red-400 sm:pl-6 lg:pl-8">
-                                35
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">%</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">50 - 70</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Estabilidad</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-red-400 sm:pl-6 lg:pl-8">
-                                27
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">FU</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">18 - 23</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Rendimiento</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-green-400 sm:pl-6 lg:pl-8">68.2</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">%</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">60 - 75</td>
-                        </tr>
-                        <tr>
-                            <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8">Ceniza</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-green-400 sm:pl-6 lg:pl-8">0.34</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">%</td>
-                            <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8">0.23 - 0.5</td>
-                        </tr>
+
+                        <!-- titulo farinografo fila -->
+                        <?php if ($i==5):?>
+                            <tr>
+                                <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8">Farinógrafo</td>
+                            </tr>
+                        <?php endif ?>
+                        <?php endfor ?>
+
                     </tbody>
                 </table>
             </div>

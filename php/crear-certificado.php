@@ -6,8 +6,10 @@
     // consultas iniciales
     $query_lista_clientes="SELECT id_cliente,nombre FROM clientes;";
     $arreglo_clientes=hacerConsulta($query_lista_clientes);
-    $query_analisis="SELECT id_analisis,id_lote,numero_en_lote FROM analisis order by id_lote asc,numero_en_lote asc;";
+    $query_analisis="SELECT id_analisis,id_lote,numero_en_lote FROM analisis order by id_analisis desc,id_lote desc,numero_en_lote desc;";
     $arreglo_analisis=hacerConsulta($query_analisis);
+    $query_almacenistas="SELECT id_almacenista,nombre_almacenista FROM almacenistas;";
+    $arreglo_almacenistas=hacerConsulta($query_almacenistas);
     $mensajeAltaCertificado="";
     function test_input($data) {
         $data = trim($data);
@@ -19,11 +21,15 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         // var_dump($_POST);
         $id_cliente=test_input($_POST["id_cliente"]);
+        $numeroPedido=test_input($_POST["numeroPedido"]);
         $id_analisis=test_input($_POST["id_analisis"]);
-        $cantidad=test_input($_POST["cantidad"]);
+        $cantidadRequerida=test_input($_POST["cantidadRequerida"]);
+        $cantidadEntregada=test_input($_POST["cantidadEntregada"]);
         $fecha=test_input($_POST["fecha"]);
+        $almacenista=test_input($_POST["almacenista"]);
 
-        $query_crear_certificado="INSERT INTO certificados (id_cliente,fecha_certificado,id_analisis,cantidad_en_tons) VALUES ($id_cliente,'$fecha',$id_analisis,$cantidad);";
+        $query_crear_certificado="INSERT INTO certificados (id_cliente,fecha_certificado,id_analisis,cantidad_requerida,numero_pedido,cantidad_entregada,id_almacenista) VALUES ($id_cliente,'$fecha',$id_analisis,$cantidadRequerida,$numeroPedido,$cantidadEntregada,$almacenista);";
+
         // echo $query_crear_certificado;
         ejecutarQuery($query_crear_certificado);
         $mensajeAltaCertificado="\"Certificado creado con éxito\"";
@@ -52,6 +58,7 @@
             <h1 class="text-2xl text-center font-bold mb-7">Crear Certificado</h1>
             <span class="text-center font-bold"><?= $mensajeAltaCertificado?></span>
             <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <!-- cliente -->
                 <div class="mb-4">
                     <label for="id_cliente" class="block text-gray-700 text-sm font-bold mb-2">
                         Cliente
@@ -63,6 +70,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+                <!-- no pedido -->
                 <div class="mt-4 mb-4">
                     <label for="numero de pedido" class="block text-gray-700 text-sm font-bold mb-2">
                         No. Pedido
@@ -71,6 +79,7 @@
                         <input type="number" name="numeroPedido" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
                     </div>
                 </div>
+                <!-- analisis -->
                 <div class="mb-4">
                     <label for="id_analisis" class="block text-gray-700 text-sm font-bold mb-2">
                         Análisis
@@ -82,22 +91,25 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <!-- cantidad requerida -->
                 <div class="mt-4 mb-4">
-                    <label for="cantidad" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="cantidadRequerida" class="block text-gray-700 text-sm font-bold mb-2">
                         Cantidad Requerida (en toneladas)
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
                         <input type="number" name="cantidadRequerida" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
                     </div>
                 </div>
+                <!-- cantidad entregada -->
                 <div class="mt-4 mb-4">
-                    <label for="cantidad" class="block text-gray-700 text-sm font-bold mb-2">
+                    <label for="cantidadEntregada" class="block text-gray-700 text-sm font-bold mb-2">
                         Cantidad Entregada (en toneladas)
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
                         <input type="number" name="cantidadEntregada" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
                     </div>
                 </div>
+                <!-- fecha certificado -->
                 <div class="mt-4 mb-4">
                     <label for="fecha del certificado" class="block text-gray-700 text-sm font-bold mb-2">
                         Fecha del Certificado
@@ -106,12 +118,18 @@
                         <input type="date" name="fecha" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
                     </div>
                 </div>
+                <!-- almacenista -->
                 <div class="mb-4">
                     <label for="almacenista" class="block text-gray-700 text-sm font-bold mb-2">
                         Solicitado por
                     </label>
                     <select name="almacenista" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
                         <option value="" selected disabled>Elija el almacenista...</option>
+                        <?php foreach ($arreglo_almacenistas as $almacenista_select): ?>
+                        <option value="<?= $almacenista_select['id_almacenista'] ?>">
+                            almacenista <?= $almacenista_select['id_almacenista'] ?>, <?= $almacenista_select['nombre_almacenista'] ?>
+                        </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="flex items-center justify-center mt-10">
