@@ -95,45 +95,49 @@ ob_start();
     <?php require_once("./navbar.php"); ?> 
 </head>
 
-<body class="">
-    <div class="container mx-auto flex flex-col items-center p-3">
+<body class="" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 0.75rem; line-height: 1rem;">
+    <div class="container mx-auto flex flex-col items-center p-3" 
+    style="
+        margin: auto;
+        padding: 0.75rem;
+    ">
         <div class="m-0">
-            <img class="mx-auto w-40" src="http://<?= $_SERVER['HTTP_HOST'] ?>/Sistema-de-control-de-laboratorio//img/logoHarinasElizondo.jpg" alt="Logo de Harinas Elizondo">
-            <h2 class="text-xl text-center mb-2 font-bold">Certificado de Análisis</h2>
-            <h3 class="text-xl text-center mb-2 font-bold underline">Harina <?= $lote['contenido'] ?></h3>
-            <h4 class="text-base text-center">Solicitada por:</h4>
-            <h3 class="text-lg text-center underline">Cliente <?= $cliente['nombre'] ?></h3>
-            <div class="p-3 mt-4">
-                <p class="text-sm"><span class="font-bold">Cantidad Solicitada: </span><?= $certificado['cantidad_requerida'] ?> toneladas</p>
-                <p class="text-sm"><span class="font-bold">Número de Lote:</span> <?= $lote['id_lote'] ?></p>
-                <p class="text-sm"><span class="font-bold">Número de Análisis:</span> <?= $analisis['id_analisis'] ?></p>
-                <p class="text-sm"><span class="font-bold">Fecha de Producción:</span> <?= $lote['fecha_creacion'] ?></p>
-                <p class="text-sm"><span class="font-bold">Fecha de Caducidad:</span> <?= $lote['fecha_caducidad'] ?></p>
-                <p class="text-sm"><span class="font-bold">Domicilio de Entrega:</span> <?= $cliente['domicilio'] ?></p>
-                <p class="text-sm"><span class="font-bold">Contacto:</span> <?= $cliente['correo'] ?></p>
-                <p class="text-sm"><span class="font-bold">Nombre de Contacto:</span> <?= $cliente['nombre_contacto'] ?></p>
-                <p class="text-sm"><span class="font-bold">Puesto del Contacto:</span> <?= $cliente['puesto_de_contacto'] ?></p>
+            <img class="mx-auto w-40" src="http://<?= $_SERVER['HTTP_HOST'] ?>/Sistema-de-control-de-laboratorio//img/logoFran.jpeg" alt="Logo de Harinas Elizondo" style="width: 100%;">
+            <h2 class="text-xl text-center mb-2 font-bold" style="text-align: center;">Certificado de Análisis</h2>
+            <h3 class="text-xl text-center mb-2 font-bold underline" style="text-align: center; text-decoration: underline;">Harina <?= $lote['contenido'] ?></h3>
+            <h4 class="text-base text-center" style="text-align: center;">Solicitada por:</h4>
+            <h3 class="text-lg text-center underline" style="text-align: center;">Cliente <?= $cliente['nombre'] ?></h3>
+            <div class="p-3 mt-4" style="margin: 3rem auto;">
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Cantidad Solicitada: </span><?= $certificado['cantidad_requerida'] ?> toneladas</p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Número de Lote:</span> <?= $lote['id_lote'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Número de Análisis:</span> <?= $analisis['id_analisis'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Fecha de Producción:</span> <?= $lote['fecha_creacion'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Fecha de Caducidad:</span> <?= $lote['fecha_caducidad'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Domicilio de Entrega:</span> <?= $cliente['domicilio'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Contacto:</span> <?= $cliente['correo'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Nombre de Contacto:</span> <?= $cliente['nombre_contacto'] ?></p>
+                <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Puesto del Contacto:</span> <?= $cliente['puesto_de_contacto'] ?></p>
             </div>
             <div class="rounded-lg">
-                <table class="table-fixed rounded-xl border border-slate-300">
+                <table class="table-fixed rounded-xl border border-slate-300" style="table-layout: auto; border: solid 2px rgb(203 213 225); border-radius: 5px;">
                     <thead class="rounded-xl">
-                        <tr class="bg-gray-200 rounded-lg">
-                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-left text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-72">Prueba</th>
-                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-center text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-44">Resultado</th>
-                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-center text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-44">Unidad</th>
-                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-center text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-52">Intervalo de Referencia</th>
+                        <tr class="bg-gray-200 rounded-lg" style="background: rgb(229 231 235);">
+                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-left text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-72" style="width: 12rem; text-align: center; font-size: 0.75rem; line-height: 1rem;">Prueba</th>
+                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-center text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-44" style="width: 9rem; text-align: center;">Resultado</th>
+                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-center text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-44" style="width: 9rem; text-align: center;">Unidad</th>
+                            <th class="whitespace-nowrap sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 p-2 text-center text-xs font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8 w-52" style="width: 11rem; text-align: center;">Intervalo de Referencia</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white rounded-xl">
                         <tr>
-                            <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8">Alveógrafo</td>
+                            <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8" style="font-weight: bold;">Alveógrafo</td>
                         </tr>
 
                         <?php for($i=1;$i<=10;$i++): ?>
                         <tr>
                         <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8"><?= $palabras[$i] ?></td>
                         <!-- resultado con color y flecha -->
-                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium sm:pl-6 lg:pl-8 <?= (($resultado[$i]>=$limites_inferiores[$i])&&($resultado[$i]<=$limites_superiores[$i]))?"text-green-400":"text-red-400"?>">
+                        <td style="text-align: center;" class="border-b border-gray-200 p-2 text-center text-xs font-medium sm:pl-6 lg:pl-8 <?= (($resultado[$i]>=$limites_inferiores[$i])&&($resultado[$i]<=$limites_superiores[$i]))?"text-green-400":"text-red-400"?>">
                             <?=$resultado[$i]?>
                             <!-- flecha o no -->
                             <?php if ($resultado[$i]<$limites_inferiores[$i]):?>
@@ -148,14 +152,14 @@ ob_start();
                             <!-- fin de flecha o no -->
                         </td>
                         <!-- fin de resultado con color y flecha -->
-                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8"><?=$unidades_medida[$i]?></td>
-                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8"><?=$limites_inferiores[$i]?> - <?=$limites_superiores[$i]?></td>
+                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8" style="text-align: center;"><?=$unidades_medida[$i]?></td>
+                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8" style="text-align: center;"><?=$limites_inferiores[$i]?> - <?=$limites_superiores[$i]?></td>
                         </tr>
 
                         <!-- titulo farinografo fila -->
                         <?php if ($i==5):?>
                             <tr>
-                                <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8">Farinógrafo</td>
+                                <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8" style="font-weight: bold;">Farinógrafo</td>
                             </tr>
                         <?php endif ?>
                         <?php endfor ?>
@@ -163,8 +167,8 @@ ob_start();
                     </tbody>
                 </table>
             </div>
-            <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/Sistema-de-control-de-laboratorio/img/Imagen1.jpg" alt="Firma" class="w-32 border-b border-black mx-auto mt-4">
-            <p class="text-center text-xs font-bold">Responsable</p>
+            <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/Sistema-de-control-de-laboratorio/img/firma.jpeg" alt="Firma" class="w-32 border-b border-black mx-auto mt-4" style="margin: 1.5rem auto 0 auto; width: 100%;">
+            <p class="text-center text-xs font-bold" style="font-weight: bold; text-align: center; text-decoration: overline; margin-top: 0;">Responsable</p>
         </div>
     </div>
 </body>
