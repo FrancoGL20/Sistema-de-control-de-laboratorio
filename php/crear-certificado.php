@@ -48,7 +48,7 @@
 
 <body class="background">
     <div class="container mx-auto flex justify-center">
-        <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm mt-20 w-[28rem] overflow-y-auto rounded-xl">
+        <div class="flex flex-col p-20 gap-5 border border-slate-200 shadow-2xl bg-blue-100/40 backdrop-blur-sm mt-20 w-[28rem] h-[45rem] overflow-y-auto rounded-xl">
             <h1 class="text-2xl text-center font-bold mb-7">Crear Certificado</h1>
             <span class="text-center font-bold"><?= $mensajeAltaCertificado?></span>
             <form method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -62,6 +62,14 @@
                         <option value="<?= $cliente['id_cliente'] ?>"><?= $cliente['nombre'] ?></option>
                         <?php endforeach ?>
                     </select>
+                </div>
+                <div class="mt-4 mb-4">
+                    <label for="numero de pedido" class="block text-gray-700 text-sm font-bold mb-2">
+                        No. Pedido
+                    </label>
+                    <div class="mt-4 flex gap-2 justify-center">
+                        <input type="number" name="numeroPedido" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="id_analisis" class="block text-gray-700 text-sm font-bold mb-2">
@@ -79,7 +87,15 @@
                         Cantidad Requerida (en toneladas)
                     </label>
                     <div class="mt-4 flex gap-2 justify-center">
-                        <input type="number" name="cantidad" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
+                        <input type="number" name="cantidadRequerida" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
+                    </div>
+                </div>
+                <div class="mt-4 mb-4">
+                    <label for="cantidad" class="block text-gray-700 text-sm font-bold mb-2">
+                        Cantidad Entregada (en toneladas)
+                    </label>
+                    <div class="mt-4 flex gap-2 justify-center">
+                        <input type="number" name="cantidadEntregada" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
                     </div>
                 </div>
                 <div class="mt-4 mb-4">
@@ -89,6 +105,14 @@
                     <div class="mt-4 flex gap-2 justify-center">
                         <input type="date" name="fecha" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="12" required>
                     </div>
+                </div>
+                <div class="mb-4">
+                    <label for="almacenista" class="block text-gray-700 text-sm font-bold mb-2">
+                        Solicitado por
+                    </label>
+                    <select name="almacenista" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" required>
+                        <option value="" selected disabled>Elija el almacenista...</option>
+                    </select>
                 </div>
                 <div class="flex items-center justify-center mt-10">
                     <button type="submit" name="submit" class="bg-slate-500 hover:bg-psipeDarkGray text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline">

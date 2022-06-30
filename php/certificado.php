@@ -16,9 +16,9 @@
     <?php require_once("./navbar.php"); ?> 
 </head>
 
-<body class="background">
-    <div class="container mx-auto flex flex-col items-center p-10">
-        <div class="mt-7">
+<body class="">
+    <div class="container mx-auto flex flex-col items-center p-3">
+        <div class="m-0">
             <img class="mx-auto w-40" src="../img/logoHarinasElizondo.png" alt="Logo de Harinas Elizondo">
             <h2 class="text-xl text-center mb-2 font-bold">Certificado de Análisis</h2>
             <h3 class="text-xl text-center mb-2 font-bold underline">Harina Maite</h3>
@@ -30,6 +30,10 @@
                 <p class="text-sm"><span class="font-bold">Número de Análisis:</span> 12</p>
                 <p class="text-sm"><span class="font-bold">Fecha de Producción:</span> 24/06/2022</p>
                 <p class="text-sm"><span class="font-bold">Fecha de Caducidad:</span> 24/06/2022</p>
+                <p class="text-sm"><span class="font-bold">Domicilio de Entrega:</span> Tal</p>
+                <p class="text-sm"><span class="font-bold">Contacto:</span> email</p>
+                <p class="text-sm"><span class="font-bold">Nombre de Contacto:</span> Chema</p>
+                <p class="text-sm"><span class="font-bold">Puesto del Contacto:</span> CEO</p>
             </div>
             <div class="rounded-lg">
                 <table class="table-fixed rounded-xl border border-slate-300">

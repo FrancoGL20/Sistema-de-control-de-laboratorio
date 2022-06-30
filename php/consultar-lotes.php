@@ -61,7 +61,7 @@
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium <?= isset($_POST['lote'])?"":"text-gray-400" ?> sm:pl-6 lg:pl-8"><?= isset($_POST['lote'])?"{$lote['contenido']}":"TA" ?></td>
                         </tr>
                         <tr>
-                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Capacidad (en toneladas)</td>
+                            <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Cantidad (en toneladas)</td>
                             <td class="border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium <?= isset($_POST['lote'])?"":"text-gray-400" ?> sm:pl-6 lg:pl-8"><?= isset($_POST['lote'])?"{$lote['capacidad']}":"CAP" ?></td>
                         </tr>
                         <tr>
