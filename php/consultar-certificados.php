@@ -3,7 +3,15 @@
     require_once("../DB/controlarDB.php");
     $query_certificados="SELECT cer.*,cl.* FROM certificados as cer join clientes as cl on cer.id_cliente=cl.id_cliente;";
     $arreglo_certficados=hacerConsulta($query_certificados);
-
+    $mensajeGuardarYEnviar="";
+    if (isset($_GET['res'])) {
+        $respuesta=(int) ($_GET['res']);
+        if($respuesta==1){
+            $mensajeGuardarYEnviar="Certificado enviado con éxito";
+        }elseif($respuesta==2){
+            $mensajeGuardarYEnviar="Hubo un error al enviar certificado";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +33,8 @@
     <div class="container mx-auto flex justify-center items-center content-center">
         <div class="flex flex-col p-10 mt-10">
             <h1 class="text-2xl text-center mb-4 font-bold">Certificados</h1>
+            <span class="text-center font-bold"><?= $mensajeGuardarYEnviar ?></span>
+            
             <div class="mt-10 overflow-y-auto h-96 rounded-xl">
                 <table class="table-auto rounded-xl border border-slate-300">
                     <thead class="rounded-lg">
@@ -45,10 +55,12 @@
                                 class="sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
                                 Ver
                             </th>
+                            <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                             <th
                                 class="sticky top-0 z-10 border-b border-gray-300 bg-gray-300 bg-opacity-75 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 backdrop-blur backdrop-filter sm:pl-6 lg:pl-8">
                                 Enviar
                             </th>
+                            <?php endif;?>
                         </tr>
                     </thead>
                     <tbody class="bg-white rounded-lg">
@@ -78,9 +90,10 @@
                                     </svg>
                                 </a>
                             </td>
+                            <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                             <td
                                 class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-400 sm:pl-6 lg:pl-8">
-                                <a href="./impresion_y_envio.php?i=<?=$certificado['id_certificado']?>">
+                                <a href="./guardarPDFyEnviarCorreo.php?i=<?=$certificado['id_certificado']?>">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                         fill="currentColor">
                                         <path
@@ -89,6 +102,7 @@
                                     </svg>
                                 </a>
                             </td>
+                            <?php endif;?>
                         </tr>
                         <?php endforeach ?>
                     </tbody>

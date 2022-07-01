@@ -96,7 +96,7 @@
 
 <body class="">
     <div class="container mx-auto flex flex-col items-center p-3">
-        <div class="m-0 border border-black">
+        <div class="m-0">
             <img class="mx-auto w-40" src="../img/logoHarinasElizondo.png" alt="Logo de Harinas Elizondo">
             <h2 class="text-xl text-center mb-2 font-bold">Certificado de Análisis</h2>
             <h3 class="text-xl text-center mb-2 font-bold underline">Harina <?= $lote['contenido'] ?></h3>

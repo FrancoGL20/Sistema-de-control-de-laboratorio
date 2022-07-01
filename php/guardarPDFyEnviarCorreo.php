@@ -1,11 +1,11 @@
 <?php
-ob_start();
-?>
-
-<?php
     require_once("./validar_sesion_iniciada.php");
+    // comienza a guardar la salida del html del archivo
+    ob_start();
+
     require_once("../DB/controlarDB.php");
-    function test_input($data) {
+    function test_input($data)
+    {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
@@ -40,6 +40,12 @@ ob_start();
     $query_valores="SELECT * FROM v_de_referencia WHERE id_valores=$id_valores;";
     $valores_de_referencia=hacerConsulta($query_valores)[0];
     // print_r($valores_de_referencia);
+
+    // almacenistas
+    $id_almacenista=$certificado['id_almacenista'];
+    $query_almacenista="SELECT * FROM almacenistas WHERE id_almacenista=$id_almacenista;";
+    $almacenista=hacerConsulta($query_almacenista)[0];
+    // print_r($almacenista);
 
     // limites inferiores, superiores y unidades de medida
     $limites_inferiores=[];
@@ -97,16 +103,13 @@ ob_start();
 
 <body class="" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 0.75rem; line-height: 1rem;">
     <div class="container mx-auto flex flex-col items-center p-3" 
-    style="
-        margin: auto;
-        padding: 0.75rem;
-    ">
+    style="margin: auto;padding: 0.75rem;">
         <div class="m-0">
             <img class="mx-auto w-40" src="http://<?= $_SERVER['HTTP_HOST'] ?>/Sistema-de-control-de-laboratorio//img/logoFran.jpeg" alt="Logo de Harinas Elizondo" style="width: 100%;">
             <h2 class="text-xl text-center mb-2 font-bold" style="text-align: center;">Certificado de Análisis</h2>
             <h3 class="text-xl text-center mb-2 font-bold underline" style="text-align: center; text-decoration: underline;">Harina <?= $lote['contenido'] ?></h3>
             <h4 class="text-base text-center" style="text-align: center;">Solicitada por:</h4>
-            <h3 class="text-lg text-center underline" style="text-align: center;">Cliente <?= $cliente['nombre'] ?></h3>
+            <h3 class="text-lg text-center underline" style="text-align: center;text-decoration:underline;">Cliente <?= $cliente['nombre'] ?></h3>
             <div class="p-3 mt-4" style="margin: 3rem auto;">
                 <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Cantidad Solicitada: </span><?= $certificado['cantidad_requerida'] ?> toneladas</p>
                 <p class="text-sm" style="margin: 0;"><span class="font-bold" style="font-weight: bold;">Número de Lote:</span> <?= $lote['id_lote'] ?></p>
@@ -130,65 +133,136 @@ ob_start();
                     </thead>
                     <tbody class="bg-white rounded-xl">
                         <tr>
-                            <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8" style="font-weight: bold;">Alveógrafo</td>
+                            <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8" style="font-weight: bold;text-align: center;">Alveógrafo</td>
                         </tr>
-
-                        <?php for($i=1;$i<=10;$i++): ?>
-                        <tr>
-                        <td class="border-b border-gray-200 p-2 text-xs font-medium text-gray-900 sm:pl-6 lg:pl-8"><?= $palabras[$i] ?></td>
+                        
+                    <!-- impresion de los 10 resultados en la tabla -->
+                    <?php for ($i=1;$i<=10;$i++): ?>
+                    <tr>
+                        <td style="text-align: center;"><?= $palabras[$i] ?></td>
                         <!-- resultado con color y flecha -->
-                        <td style="text-align: center;" class="border-b border-gray-200 p-2 text-center text-xs font-medium sm:pl-6 lg:pl-8 <?= (($resultado[$i]>=$limites_inferiores[$i])&&($resultado[$i]<=$limites_superiores[$i]))?"text-green-400":"text-red-400"?>">
+                        <td style="text-align: center;<?= (($resultado[$i]>=$limites_inferiores[$i])&&($resultado[$i]<=$limites_superiores[$i])) ? "color:green;" : "color:red;"?>">
                             <?=$resultado[$i]?>
-                            <!-- flecha o no -->
+                            <!-- arriba o abajo -->
                             <?php if ($resultado[$i]<$limites_inferiores[$i]):?>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
+                                (abajo)
                             <?php elseif ($resultado[$i]>$limites_superiores[$i]):?>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                </svg>
+                                (arriba)
                             <?php endif ?>
-                            <!-- fin de flecha o no -->
+                            <!-- fin de arriba o abajo -->
                         </td>
                         <!-- fin de resultado con color y flecha -->
-                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8" style="text-align: center;"><?=$unidades_medida[$i]?></td>
-                        <td class="border-b border-gray-200 p-2 text-center text-xs font-medium text-gray-400 sm:pl-6 lg:pl-8" style="text-align: center;"><?=$limites_inferiores[$i]?> - <?=$limites_superiores[$i]?></td>
-                        </tr>
+                        <td style="text-align: center;"><?=$unidades_medida[$i]?></td>
+                        <td style="text-align: center;"><?=$limites_inferiores[$i]?> - <?=$limites_superiores[$i]?></td>
+                    </tr>
 
                         <!-- titulo farinografo fila -->
                         <?php if ($i==5):?>
                             <tr>
-                                <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8" style="font-weight: bold;">Farinógrafo</td>
+                                <td colspan="4" class=" py-2 pl-2 pr-3 text-xs font-bold text-gray-900 sm:pl-6 lg:pl-8" style="font-weight: bold;text-align: center;">Farinógrafo</td>
                             </tr>
                         <?php endif ?>
-                        <?php endfor ?>
+                    <?php endfor ?>
 
                     </tbody>
                 </table>
             </div>
             <img src="http://<?= $_SERVER['HTTP_HOST'] ?>/Sistema-de-control-de-laboratorio/img/firma.jpeg" alt="Firma" class="w-32 border-b border-black mx-auto mt-4" style="margin: 1.5rem auto 0 auto; width: 100%;">
-            <p class="text-center text-xs font-bold" style="font-weight: bold; text-align: center; text-decoration: overline; margin-top: 0;">Responsable</p>
+            <p class="text-center text-xs font-bold" style="font-weight: bold; text-align: center; margin-top: 0;margin:0;">_________________</p>
+            <p class="text-center text-xs font-bold" style="font-weight: bold; text-align: center; margin-top: 0;">Responsable</p>
         </div>
     </div>
 </body>
 
 </html>
 
+<!-- GUARDADO DEL ARCHIVO -->
 <?php
-$html=ob_get_clean();
-require_once "./../libraries/dompdf/autoload.inc.php";
-use Dompdf\Dompdf;
-$dompdf=new Dompdf();
+    // guardar el html capturado en las
+    // primeras líneas del documento en una variable
+    $html=ob_get_clean();
+    ob_end_flush();
+    require_once "./../libraries/dompdf/autoload.inc.php";
+    use Dompdf\Dompdf;
 
-$options=$dompdf->getOptions();
-$options->set(array('isRemoteEnabled'=>true));
-$dompdf->setOptions($options);
+    $dompdf=new Dompdf();
+    $options=$dompdf->getOptions();
+    $options->set(array('isRemoteEnabled'=>true));
+    $dompdf->setOptions($options);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('letter');
+    $dompdf->render();
 
-$dompdf->loadHtml($html);
+    // permite generar el pdf y descargarlo, aparece la opcion asi
+    // con "Attachment"=>false solo se muestra el pdf
+    // $dompdf->stream("../certificados/$id_certificado.pdf",array("Attachment"=>false));
 
-$dompdf->setPaper('letter');
-$dompdf->render();
-$dompdf->stream("../certificados/$id_certificado.pdf",array("Attachment"=>false));
+
+    // permite guardar el archivo en la carpeta certificados
+    $output = $dompdf->output();
+    $fileName = "$id_certificado.pdf";
+    file_put_contents('../certificados/'.$fileName, $output);
+    $ubicacionArchivo='sistema-de-control-de-laboratorio/certificados/'.$fileName;
 
 ?>
+<h2>Archivo guardado</h2>
+<p>archivo ubicado en <b><?=$ubicacionArchivo?></b></p>
+<?php
+    // <!-- ENVIAR CORREOS A CLIENTE Y ALMACENISTA -->
+    require_once("../config/config.php");
+    $correoCliente=$cliente['correo'];
+    $correoAlmacenista=$almacenista['correo_almacenista'];
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+
+    require_once("../libraries/phpmailer/src/PHPMailer.php");
+    require_once("../libraries/phpmailer/src/SMTP.php");
+    require_once("../libraries/phpmailer/src/Exception.php");
+
+    $mail=new PHPMailer(true);
+
+    try {
+        //Server settings
+        // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = CORREO;                     //SMTP username
+        $mail->Password   = CONTRACORREO;                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+        // $mail->Port       = 587;
+
+        //Recipients
+        $mail->setFrom(CORREO, 'Empresa helizondo');
+        $mail->addAddress($correoCliente);     //Add a recipient
+        $mail->addAddress($correoAlmacenista);               //Name is optional
+        // $mail->addReplyTo('info@gmail.com', 'Information');
+        // $mail->addCC('cc@gmail.com');
+        // $mail->addBCC('bcc@gmail.com');
+
+        //Attachments
+        $mail->addAttachment("../certificados/$id_certificado.pdf","Certificado$id_certificado.pdf");         //Add attachments
+        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+        //Content
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = "Envio de certificado {$certificado['numero_pedido']}";
+        $mail->Body    = "<b>Se adjunta el archivo del certificado correspondiente el numero de pedido {$certificado['numero_pedido']}</b>";
+        // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+        // echo 'Correo enviado con éxito';
+        // header("Location: ./consultar-certificados.php?res=2");
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+
+?>
+<h2>Correo enviado con éxito</h2><br>
+<span>Correo enviado a cliente <b><?=$cliente['nombre']?></b> en el correo: <b><?=$correoCliente?></b></span><br>
+<span>Correo enviado a almacenista <b><?=$almacenista['nombre_almacenista']?></b> en el correo: <b><?=$correoAlmacenista?></b></span>
+<br><br>
+<a href="<?="./consultar-certificados.php"?>" style="padding:5px;text-decoration:none;color:black;border:1px black solid">Regresa a consulta de certificados</a>

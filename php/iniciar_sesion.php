@@ -21,13 +21,13 @@
                 <form class="m-0" method="post" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="mb-4">
                         <label for="correo" class="block text-gray-700 text-sm font-bold mb-2">
-                            Correo
+                            Correo <span class="error"><?=$correoErr?></span>
                         </label>
                         <input type="email" name="correo" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="nombre@helizondo.com">
                     </div>
                     <div class="mb-6">
                         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                            Contraseña
+                            Contraseña <span class="error"><?=$contraErr?></span>
                         </label>
                         <input type="password" name="contraseña" class="shadow appearance-none border border-slate-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500" placeholder="**********">
                     </div>

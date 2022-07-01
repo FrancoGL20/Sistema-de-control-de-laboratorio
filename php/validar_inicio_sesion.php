@@ -1,6 +1,7 @@
 <?php
 
 require_once("../config/config.php");
+require_once("../DB/controlarDB.php");
 
 function test_input($data) {
     $data = trim($data);
@@ -8,10 +9,12 @@ function test_input($data) {
     $data = htmlspecialchars($data);
     return $data;
 }
+$correoErr=$contraErr="";
 $hay_errores=false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // verifico si estan o no vacios
     if (empty($_POST["correo"])) {
-        $correoErr = "* correo requerido";
+        $correoErr = "* Correo requerido";
         $hay_errores = true;
     } else {
         $correo = test_input($_POST["correo"]);
@@ -21,6 +24,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $hay_errores = true;
     } else {
         $contra = test_input($_POST["contraseña"]);
+    }
+
+    if (!$hay_errores) {
+        // verificando existencia de usuario
+        $existe_usuario=numeroRegistrosCon("SELECT * FROM usuarios where correo='$correo';");
+        if ($existe_usuario==0) {
+            $correoErr="* Usuario no existente";
+            $hay_errores=true;
+        }
+    }
+
+    if (!$hay_errores) {
+        // verificando concordancia de contraseña
+        $contraCorrecta=hacerConsulta("SELECT contrasena FROM usuarios where correo='$correo';")[0]['contrasena'];
+        // var_dump($contraCorrecta);
+        if (!(password_verify($contra, $contraCorrecta))) {
+            $contraErr="* Contraseña incorrecta";
+            $hay_errores=true;
+        }
     }
 
     if (!$hay_errores) {
@@ -42,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $_SESSION['sesion']=array();
                     $_SESSION['sesion']['id']=$id;
                     $_SESSION['sesion']['correo']=$correo;
-                    $_SESSION['sesion']['tipo']=$tipo;
+                    $_SESSION['sesion']['tipo']=(int)$tipo;
                     //enviar a index
                     header("Location: ./dashboard.php");
                 } else {

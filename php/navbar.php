@@ -18,6 +18,7 @@
             <!-- Lado derecho -->
             <div class="hidden lg:flex items-center space-x-1">
                 <!-- Dropdown button 1 -->
+                <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                 <div class="flex flex-col overflow-visible float-right items-start">
                     <button class="rounded p-2 dropBtn hover:bg-blue-50 transition duration-500 text-black" id="dropBtn">
                         Usuarios
@@ -31,6 +32,7 @@
                         <a href="./modificar-usuarios.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Modificación/Baja</a>
                     </div>
                 </div>
+                <?php endif;?>
                 <!-- Dropdown button 2 -->
                 <div class="flex flex-col overflow-visible float-right items-start">
                     <button class="rounded p-2 dropBtn2 hover:bg-blue-50 transition duration-500 text-black" id="dropBtn2">
@@ -41,8 +43,10 @@
                     </button>
                     <!-- Dropdown -->
                     <div class="text-sm bg-gradient-to-br from-slate-50 to-slate-300 hidden absolute mt-12 flex-col rounded min-w-max" id="dropdown2">
+                        <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                         <a href="./alta-clientes.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Alta</a>
                         <a href="./modificar-clientes.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Modificación/Baja</a>
+                        <?php endif;?>
                         <a href="./consultar-clientes.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Consultar</a>
                     </div>
                 </div>
@@ -56,8 +60,10 @@
                     </button>
                     <!-- Dropdown -->
                     <div class="text-sm bg-gradient-to-br from-slate-50 to-slate-300 hidden absolute mt-12 flex-col rounded min-w-max" id="dropdown3">
+                        <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                         <a href="./alta-equipo-laboratorio.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Alta</a>
                         <a href="./modificar-equipo-laboratorio.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Modificación/Baja</a>
+                        <?php endif;?>
                         <a href="./consultar-equipo-laboratorio.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Consultar</a>
                     </div>
                 </div>
@@ -71,8 +77,10 @@
                     </button>
                     <!-- Dropdown -->
                     <div class="text-sm bg-gradient-to-br from-slate-50 to-slate-300 hidden absolute mt-12 flex-col rounded min-w-max" id="dropdown4">
+                        <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                         <a href="./alta-lotes.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Alta</a>
                         <a href="./modificar-lotes.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Modificación</a>
+                        <?php endif;?>
                         <a href="./consultar-lotes.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Consultar</a>
                     </div>
                 </div>
@@ -86,8 +94,13 @@
                     </button>
                     <!-- Dropdown -->
                     <div class="text-sm bg-gradient-to-br from-slate-50 to-slate-300 hidden absolute mt-12 flex-col rounded min-w-max" id="dropdown5">
+                        <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                         <a href="./alta-analisis.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Alta</a>
+                        <?php endif;?>
+                        
+                        <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                         <a href="./modificar-valores-referencia.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Valores de referencia</a>
+                        <?php endif;?>
                         <a href="./consultar-analisis.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Consultar</a>
                     </div>
                 </div>
@@ -101,7 +114,9 @@
                     </button>
                     <!-- Dropdown -->
                     <div class="text-sm bg-gradient-to-br from-slate-50 to-slate-300 hidden absolute mt-12 flex-col rounded min-w-max" id="dropdown6">
+                        <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                         <a href="./crear-certificado.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Creación</a>
+                        <?php endif;?>
                         <a href="./consultar-certificados.php" class="rounded px-2 py-1 hover:bg-blue-50 duration-500 text-black">Consulta <br/>e impresión</a>
                     </div>
                 </div>
@@ -122,10 +137,13 @@
             </div>
         </div>
     </div>
+
+
     <!-- Mobile Menu -->
     <div class="mobile-menu hidden lg:hidden p-1">
         <!-- <a href="./index.html" class="text-center block rounded hover:bg-blue-50 py-2 px-2 duration-500 text-black">Inicio</a> -->
         <!-- Dropdown button 1-->
+        <?php if(($_SESSION['sesion']['tipo'])==3): ?>
         <div class="text-center flex flex-col">
             <button class="rounded p-2 m-1 dropBtnM hover:bg-blue-50 text-black duration-500" id="dropBtnM">
                 Usuarios
@@ -139,6 +157,7 @@
                 <a href="./modificar-usuarios.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Modificación/Baja</a>
             </div>
         </div>
+        <?php endif;?>
         <!-- Dropdown button 2-->
         <div class="text-center flex flex-col">
             <button class="rounded p-2 m-1 dropBtnM2 hover:bg-blue-50 text-black duration-500" id="dropBtnM2">
@@ -149,8 +168,10 @@
             </button>
             <!-- Dropdown -->
             <div class="bg-gradient-to-br from-slate-50/50 to-slate-300/50 hidden flex-col m-1 rounded text-sm" id="dropdownM2">
+                <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                 <a href="./alta-clientes.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Alta</a>
                 <a href="./modificar-clientes.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Modificación/Baja</a>
+                <?php endif;?>
                 <a href="./consultar-clientes.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Consultar</a>
             </div>
         </div>
@@ -164,8 +185,10 @@
             </button>
             <!-- Dropdown -->
             <div class="bg-gradient-to-br from-slate-50/50 to-slate-300/50 hidden flex-col m-1 rounded text-sm" id="dropdownM3">
+                <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                 <a href="./alta-equipo-laboratorio.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Alta</a>
                 <a href="./modificar-equipo-laboratorio.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Modificación/Baja</a>
+                <?php endif;?>
                 <a href="./consultar-equipo-laboratorio.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Consultar</a>
             </div>
         </div>
@@ -179,8 +202,10 @@
             </button>
             <!-- Dropdown -->
             <div class="bg-gradient-to-br from-slate-50/50 to-slate-300/50 hidden flex-col m-1 rounded text-sm" id="dropdownM4">
+                <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                 <a href="./alta-lotes.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Alta</a>
                 <a href="./modificar-lotes.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Modificación</a>
+                <?php endif;?>
                 <a href="./consultar-lotes.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Consultar</a>
             </div>
         </div>
@@ -194,8 +219,13 @@
             </button>
             <!-- Dropdown -->
             <div class="bg-gradient-to-br from-slate-50/50 to-slate-300/50 hidden flex-col m-1 rounded text-sm" id="dropdownM5">
+                <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                 <a href="./alta-analisis.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Alta</a>
+                <?php endif;?>
+
+                <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                 <a href="./modificar-valores-referencia.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Valores de referencia</a>
+                <?php endif;?>
                 <a href="./consultar-analisis.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Consultar</a>
             </div>
         </div>
@@ -209,17 +239,17 @@
             </button>
             <!-- Dropdown -->
             <div class="bg-gradient-to-br from-slate-50/50 to-slate-300/50 hidden flex-col m-1 rounded text-sm" id="dropdownM6">
+                <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                 <a href="./crear-certificado.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Creación</a>
+                <?php endif;?>
                 <a href="./consultar-certificados.php" class="rounded px-2 py-1 hover:bg-blue-50 text-black duration-500">Consulta e impresión</a>
             </div>
         </div>
         <!-- Cerrar sesión -->
         <div class="text-center flex flex-col rounded hover:bg-blue-50 transition duration-500">
-            <form action="" method="" class="flex items-center justify-center m-0">
-                <button type="submit" name="cerrarSesion" class="rounded p-2 text-center text-black block w-full">
-                    Cerrar Sesión
-                </button>
-            </form>
+            <a href="./cerrar_sesion.php" class="rounded p-2 hover:bg-blue-50 transition duration-500 text-black">
+                        <b>Cerrar Sesión</b>
+            </a>
         </div>
     </div>
 </nav>

@@ -1,6 +1,9 @@
+<pre>
 <?php 
     require_once("./validar_sesion_iniciada.php");
+    // var_dump($_SESSION);
 ?>
+</pre>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -22,7 +25,7 @@
             <div class="flex flex-wrap gap-7 justify-center">
                 
                 <!-- Usuarios -->
-                <?php if($_SESSION['sesion']['tipo']==3): ?>
+                <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                 <div class="w-60 h-[22rem] bg-blue bg-gradient-to-br from-blue-50/50 to-blue-300/50 shadow-2xl backdrop-blur-sm rounded-xl flex flex-col items-center space-y-4">
                     <img class="w-60 rounded-t-xl" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80" alt="Un hombre trabajando en su computadora sobre un escritorio, acompanado de su taza de cafe">
                     <h2 class="text-xl font-bold">Usuarios</h2>
@@ -55,6 +58,7 @@
                     <h2 class="text-xl font-bold">Clientes</h2>
                     <div class="">
                         <ul class="space-y-3">
+                            <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./alta-clientes.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -71,6 +75,7 @@
                                     Modificación/Baja
                                 </a>
                             </li>
+                            <?php endif;?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./consultar-clientes.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -89,6 +94,7 @@
                     <h2 class="text-xl font-bold">Equipo Laboratorio</h2>
                     <div class="">
                         <ul class="space-y-3">
+                            <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./alta-equipo-laboratorio.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -105,6 +111,7 @@
                                     Modificación/Baja
                                 </a>
                             </li>
+                            <?php endif;?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./consultar-equipo-laboratorio.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -123,6 +130,7 @@
                     <h2 class="text-xl font-bold">Lotes</h2>
                     <div class="">
                         <ul class="space-y-3">
+                            <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./alta-lotes.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -139,6 +147,7 @@
                                     Modificación
                                 </a>
                             </li>
+                            <?php endif;?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./consultar-lotes.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -157,6 +166,7 @@
                     <h2 class="text-xl font-bold">Análisis</h2>
                     <div class="">
                         <ul class="space-y-3">
+                            <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./alta-analisis.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -165,6 +175,8 @@
                                     Alta
                                 </a>
                             </li>
+                            <?php endif;?>
+                            <?php if(($_SESSION['sesion']['tipo'])==3): ?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./modificar-valores-referencia.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -173,6 +185,7 @@
                                     Valores de referencia
                                 </a>
                             </li>
+                            <?php endif;?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./consultar-analisis.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -191,6 +204,7 @@
                     <h2 class="text-xl font-bold">Certificados</h2>
                     <div class="">
                         <ul class="space-y-3">
+                            <?php if(($_SESSION['sesion']['tipo'])==2 || ($_SESSION['sesion']['tipo'])==3): ?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./crear-certificado.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
@@ -199,6 +213,7 @@
                                     Creación
                                 </a>
                             </li>
+                            <?php endif;?>
                             <li class="hover:underline underline-offset-2 decoration-slate-50 decoration-2">
                                 <a href="./consultar-certificados.php" class="flex items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 20 20" fill="currentColor">
