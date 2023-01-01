@@ -1,12 +1,15 @@
 # ¿Qué es config?
+
 Es un directorio con las configuraciones personales de accesibilidad que pueden cambiar entre usuarios:
+
 - contiene url de la ubicación del sistema en el servidor
 - contraseñas de la base de datos usada
 - contraseñas de la cuenta de gmail usada para enviar correos (ver notas en el ejemplo comentado)
 
-<!-- Estructura vacia del config.php (llenar para usar) -->
+<!-- Estructura vacia del config.php (copiar y llenar para usar) -->
 <!--
 
+<?php
 // url mostrada al entrar al sistema al sistema
 // este es un ejemplo
 $url="http://localhost/sistema-de-control-de-laboratorio";
@@ -22,5 +25,6 @@ define('DB', '');
 // https://youtu.be/RpSQQIGTpTM
 define('CORREO', '');
 define('CONTRACORREO', '');
+?>
 
 -->

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-06-2022 a las 04:00:46
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 8.1.6
+-- Tiempo de generación: 02-01-2023 a las 00:02:21
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,27 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `sistema_control_harina`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `almacenistas`
+--
+
+CREATE TABLE `almacenistas` (
+  `id_almacenista` int(11) NOT NULL,
+  `nombre_almacenista` varchar(200) DEFAULT NULL,
+  `correo_almacenista` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `almacenistas`
+--
+
+INSERT INTO `almacenistas` (`id_almacenista`, `nombre_almacenista`, `correo_almacenista`) VALUES
+(1, 'francisco', 'hack.spam.777@gmail.com'),
+(2, 'oscar', 'hack.spam.777@gmail.com'),
+(3, 'jose', 'hack.spam.777@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -43,7 +64,7 @@ CREATE TABLE `analisis` (
   `ceniza` float DEFAULT NULL,
   `id_alveografo` int(11) DEFAULT NULL,
   `id_farinografo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `analisis`
@@ -65,16 +86,19 @@ CREATE TABLE `certificados` (
   `id_cliente` int(11) DEFAULT NULL,
   `fecha_certificado` date DEFAULT NULL,
   `id_analisis` int(11) DEFAULT NULL,
-  `cantidad_en_tons` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_almacenista` int(11) DEFAULT NULL,
+  `cantidad_requerida` int(11) DEFAULT NULL,
+  `numero_pedido` int(11) DEFAULT NULL,
+  `cantidad_entregada` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `certificados`
 --
 
-INSERT INTO `certificados` (`id_certificado`, `id_cliente`, `fecha_certificado`, `id_analisis`, `cantidad_en_tons`) VALUES
-(1, 12, '2022-06-30', 6, 223),
-(2, 16, '2022-06-30', 7, 323);
+INSERT INTO `certificados` (`id_certificado`, `id_cliente`, `fecha_certificado`, `id_analisis`, `id_almacenista`, `cantidad_requerida`, `numero_pedido`, `cantidad_entregada`) VALUES
+(1, 12, '2022-06-30', 6, 1, 500, 159, 400),
+(2, 16, '2022-06-30', 7, 2, 100, 222, 99);
 
 -- --------------------------------------------------------
 
@@ -92,7 +116,7 @@ CREATE TABLE `clientes` (
   `estado` int(11) DEFAULT 3,
   `nombre_contacto` varchar(100) DEFAULT NULL,
   `puesto_de_contacto` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `clientes`
@@ -100,7 +124,7 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id_cliente`, `id_valores`, `correo`, `domicilio`, `nombre`, `rfc`, `estado`, `nombre_contacto`, `puesto_de_contacto`) VALUES
 (12, 1, 'correo@gmail.com', 'calle, colonia, 5, 2, municipio, Guerrero, 52766', 'empresa 1', 'GULF010604ER1', 3, 'contacto', 'puesto'),
-(16, 21, 'fefsefsefsefes@gmail.com', 'vdfvfd, vdfvfd, 4, , fgdfgdf, Chiapas, 52765', 'panaderia de juan', 'GULF010604ER3', 3, 'nhghn', 'jgyjygjygj');
+(16, 21, 'francgutierrezlopez@gmail.com', 'vdfvfd, vdfvfd, 4, , fgdfgdf, Chiapas, 52765', 'panaderia de juan', 'GULF010604ER3', 3, 'nhghn', 'jgyjygjygj');
 
 -- --------------------------------------------------------
 
@@ -122,7 +146,7 @@ CREATE TABLE `equipo_laboratorio` (
   `clave_mantenimiento` varchar(50) DEFAULT NULL,
   `fecha_ultimo_mantenimiento` date DEFAULT NULL,
   `venc_garantia` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `equipo_laboratorio`
@@ -144,7 +168,7 @@ CREATE TABLE `lotes` (
   `fecha_creacion` date DEFAULT NULL,
   `contenido` varchar(100) DEFAULT NULL,
   `fecha_caducidad` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `lotes`
@@ -167,7 +191,7 @@ CREATE TABLE `tipos_usuarios` (
   `id_tipo` int(11) NOT NULL,
   `nombre` varchar(50) DEFAULT NULL,
   `descripcion` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `tipos_usuarios`
@@ -189,7 +213,7 @@ CREATE TABLE `usuarios` (
   `correo` varchar(100) DEFAULT NULL,
   `contrasena` varchar(255) DEFAULT NULL,
   `id_tipo` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -198,7 +222,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `correo`, `contrasena`, `id_tipo`) VALUES
 (1, 'admin@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 3),
 (2, 'consultor@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 2),
-(3, 'visor@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 2);
+(3, 'visor@helizondo.com', '$2y$10$ygyPuIDR8M7zsIIfJny3qOFoe8HrGmfPR/UyXbg8v.EjayOfRu91a', 1);
 
 -- --------------------------------------------------------
 
@@ -218,7 +242,7 @@ CREATE TABLE `v_de_referencia` (
   `estabilidad` varchar(100) DEFAULT NULL,
   `rendimiento` varchar(100) DEFAULT NULL,
   `ceniza` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `v_de_referencia`
@@ -231,6 +255,12 @@ INSERT INTO `v_de_referencia` (`id_valores`, `resistencia`, `hinchamiento`, `amp
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `almacenistas`
+--
+ALTER TABLE `almacenistas`
+  ADD PRIMARY KEY (`id_almacenista`);
 
 --
 -- Indices de la tabla `analisis`
@@ -247,7 +277,8 @@ ALTER TABLE `analisis`
 ALTER TABLE `certificados`
   ADD PRIMARY KEY (`id_certificado`),
   ADD KEY `certificados_FK` (`id_cliente`),
-  ADD KEY `certificados_FK_2` (`id_analisis`);
+  ADD KEY `certificados_FK_2` (`id_analisis`),
+  ADD KEY `certificados_FK_1` (`id_almacenista`);
 
 --
 -- Indices de la tabla `clientes`
@@ -290,6 +321,12 @@ ALTER TABLE `v_de_referencia`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `almacenistas`
+--
+ALTER TABLE `almacenistas`
+  MODIFY `id_almacenista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `analisis`
@@ -350,6 +387,7 @@ ALTER TABLE `analisis`
 --
 ALTER TABLE `certificados`
   ADD CONSTRAINT `certificados_FK` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id_cliente`),
+  ADD CONSTRAINT `certificados_FK_1` FOREIGN KEY (`id_almacenista`) REFERENCES `almacenistas` (`id_almacenista`),
   ADD CONSTRAINT `certificados_FK_2` FOREIGN KEY (`id_analisis`) REFERENCES `analisis` (`id_analisis`);
 
 --
