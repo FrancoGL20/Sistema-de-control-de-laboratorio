@@ -9,7 +9,7 @@ Creación de un sistema de control de laboratorio que permita hacer la emisión 
 
     ![Descarga de GitHub](img/readme/instalacion1.png)
 3. En la carpeta DB se encuentra un archivo *.sql el cual contiene el script de la base de datos, en el administrador de base de datos usado, importar el archivo para tener la base de datos completa, este puede ayudar en el paso 6 con el nombre de la base de datos
-4. Una vez teniendo las carpetas y archivos necesarios, entrar a config/README.md y copiar el contenido del segundo comentario
+4. Una vez teniendo las carpetas y archivos necesarios, entrar a config/README.md y copiar el contenido del código
 
     ![Información del config](img/readme/instalacion2.png)
 5. Crear un archivo config.php en el directorio config/ y pegar en él todo lo copiado en el paso 4

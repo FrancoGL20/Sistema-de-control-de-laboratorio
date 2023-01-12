@@ -6,9 +6,9 @@ Es un directorio con las configuraciones personales de accesibilidad que pueden 
 - contraseñas de la base de datos usada
 - contraseñas de la cuenta de gmail usada para enviar correos (ver notas en el ejemplo comentado)
 
-<!-- Estructura vacia del config.php (copiar y llenar para usar) -->
-<!--
+## Contenido del archivo a crear `config.php`
 
+```php
 <?php
 // url mostrada al entrar al sistema al sistema
 // este es un ejemplo
@@ -26,5 +26,4 @@ define('DB', '');
 define('CORREO', '');
 define('CONTRACORREO', '');
 ?>
-
--->
+```
